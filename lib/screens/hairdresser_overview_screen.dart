@@ -44,11 +44,33 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       priceSection: '€',
       icon: 'Schnittzone.jpg',
     ),
+    Hairdresser(
+      id: 6,
+      title: 'Fessler Barbershop',
+      description: 'Neues Styling, kreative Schnitte oder klassisch.',
+      priceSection: '€',
+      icon: 'fessler_barbershop.png',
+    ),
+    Hairdresser(
+      id: 7,
+      title: 'Stylepark',
+      description: 'Neues Styling, kreative Schnitte oder klassisch.',
+      priceSection: '€',
+      icon: 'Stylepark.png',
+    ),
+    Hairdresser(
+      id: 8,
+      title: 'Simple Barber Shop',
+      description: 'Neues Styling, kreative Schnitte oder klassisch.',
+      priceSection: '€',
+      icon: 'Simple_barber-shop.png',
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade600,
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: new Row(
@@ -66,7 +88,8 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               onPressed: () {},
             ),
             FloatingActionButton(
-              backgroundColor: Colors.blueGrey.shade500,
+              backgroundColor: Colors.cyan.shade800,
+              elevation: 7,
               onPressed: () {},
             ),
             IconButton(
@@ -86,10 +109,49 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         itemCount: loadedItems.length,
         itemBuilder: (context, index) {
           return Card(
+            elevation: 5,
+            color: Colors.white,
             child: ListTile(
               onTap: () {},
-              title: Text(loadedItems[index].title),
-              subtitle: Text(loadedItems[index].description),
+              title: Text(
+                loadedItems[index].title,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              subtitle: Column(
+                children: [
+                  Text(
+                    loadedItems[index].description,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 15,
+                      height: 1.5,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        loadedItems[index].priceSection,
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 15,
+                            height: 1.5),
+                      ),
+                      Text(
+                        'Haarstudio',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      Text(
+                        'Geöffnet',
+                        style: TextStyle(color: Colors.green),
+                      )
+                    ],
+                  ),
+                ],
+              ),
               contentPadding: EdgeInsets.all(20.0),
               leading: CircleAvatar(
                 backgroundColor: Colors.grey,
