@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/hairdresser.dart';
+import 'detail_screen.dart';
 
 class ProductsOverviewScreen extends StatefulWidget {
   @override
@@ -112,7 +113,13 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             elevation: 5,
             color: Colors.white,
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DetailScreen(loadedItems[index])));
+              },
               title: Text(
                 loadedItems[index].title,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
