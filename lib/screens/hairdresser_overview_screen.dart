@@ -9,6 +9,7 @@ class ProductsOverviewScreen extends StatefulWidget {
 }
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
+  int _currentTab = 0;
   final List<Hairdresser> loadedItems = [
     Hairdresser(
       id: 1,
@@ -72,40 +73,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade600,
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.home_outlined),
-              color: Colors.grey,
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.search_outlined),
-              color: Colors.grey,
-              onPressed: () {},
-            ),
-            FloatingActionButton(
-              backgroundColor: Colors.cyan.shade800,
-              elevation: 7,
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.location_on_outlined),
-              color: Colors.grey,
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.person_outline),
-              color: Colors.grey,
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
       body: ListView.builder(
         itemCount: loadedItems.length,
         itemBuilder: (context, index) {
@@ -168,6 +135,37 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             ),
           );
         },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentTab,
+        onTap: (int value) {
+          setState(() {
+            _currentTab = value;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 30,
+            ),
+            title: SizedBox.shrink(),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search_outlined,
+              size: 30,
+            ),
+            title: SizedBox.shrink(),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.location_on_outlined,
+              size: 30,
+            ),
+            title: SizedBox.shrink(),
+          ),
+        ],
       ),
     );
   }
