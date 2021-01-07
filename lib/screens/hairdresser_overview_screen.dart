@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:studr/widgets/appBar.dart';
+import 'package:studr/widgets/categoriesScroller.dart';
+import 'package:studr/widgets/topAppBar.dart';
 
 import '../models/hairdresser.dart';
 import 'detail_screen.dart';
+
+import '../widgets/appBar.dart';
+import '../widgets/hairdresserList.dart';
 
 class ProductsOverviewScreen extends StatefulWidget {
   @override
@@ -71,101 +77,31 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade600,
-      body: ListView.builder(
-        itemCount: loadedItems.length,
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 5,
-            color: Colors.white,
-            child: ListTile(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            DetailScreen(loadedItems[index])));
-              },
-              title: Text(
-                loadedItems[index].title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.cyan.shade50,
+        bottomNavigationBar: MyAppBar(),
+        body: Container(
+          child: Column(
+            children: [
+              AnimatedOpacity(
+                duration: const Duration(microseconds: 200),
+                opacity: 1,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  alignment: Alignment.topCenter,
+                  child: CategoriesScroller(loadedItems),
+                ),
               ),
-              subtitle: Column(
-                children: [
-                  Text(
-                    loadedItems[index].description,
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 15,
-                      height: 1.5,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        loadedItems[index].priceSection,
-                        style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 15,
-                            height: 1.5),
-                      ),
-                      Text(
-                        'Haarstudio',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      Text(
-                        'Geöffnet',
-                        style: TextStyle(color: Colors.green),
-                      )
-                    ],
-                  ),
-                ],
+              const SizedBox(
+                height: 10,
               ),
-              contentPadding: EdgeInsets.all(20.0),
-              leading: CircleAvatar(
-                backgroundColor: Colors.grey,
-                backgroundImage:
-                    AssetImage('assets/icons/${loadedItems[index].icon}'),
+              Expanded(
+                child: HairdresserList(loadedItems),
               ),
-            ),
-          );
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentTab,
-        onTap: (int value) {
-          setState(() {
-            _currentTab = value;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 30,
-            ),
-            title: SizedBox.shrink(),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search_outlined,
-              size: 30,
-            ),
-            title: SizedBox.shrink(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.location_on_outlined,
-              size: 30,
-            ),
-            title: SizedBox.shrink(),
-          ),
-        ],
+        ),
       ),
     );
   }
