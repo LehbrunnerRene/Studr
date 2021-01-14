@@ -25,10 +25,17 @@ class CategoriesScroller extends StatelessWidget {
                 margin: EdgeInsets.only(right: 20),
                 height: categoryHeight,
                 decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        spreadRadius: 0.5,
+                        blurRadius: 5,
+                      ),
+                    ],
                     color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0))),
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -46,11 +53,12 @@ class CategoriesScroller extends StatelessWidget {
                         child: Text(
                           loadedItems[0].title,
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 20,
                             color: Colors.black,
                           ),
                         ),
                       ),
+                      SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -74,7 +82,7 @@ class CategoriesScroller extends StatelessWidget {
                 height: categoryHeight,
                 decoration: BoxDecoration(
                     color: Colors.blue.shade400,
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0))),
                 child: Container(
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -106,7 +114,7 @@ class CategoriesScroller extends StatelessWidget {
                 height: categoryHeight,
                 decoration: BoxDecoration(
                     color: Colors.lightBlueAccent.shade400,
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0))),
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
