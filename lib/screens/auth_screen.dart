@@ -115,7 +115,7 @@ class _AuthCardState extends State<AuthCard> {
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
-              child: Text('OK'))
+              child: Text('OKAY'))
         ],
       ),
     );
