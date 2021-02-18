@@ -40,30 +40,31 @@ class MapSampleState extends State<MapSample> {
   
     @override
     Widget build(BuildContext context) {
-      return new Scaffold(
-        body: GoogleMap(
-          mapToolbarEnabled: false,
-          zoomGesturesEnabled: false,
-          rotateGesturesEnabled: false,
-          zoomControlsEnabled: false,
-          scrollGesturesEnabled: false,
-          mapType: MapType.hybrid,
-          onTap: (LatLng latLng) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MapScreenSaloon())
-                  );
+      var googleMap = GoogleMap(
+                mapToolbarEnabled: false,
+                zoomGesturesEnabled: false,
+                rotateGesturesEnabled: false,
+                zoomControlsEnabled: false,
+                scrollGesturesEnabled: false,
+                mapType: MapType.hybrid,
+                onTap: (LatLng latLng) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MapScreenSaloon())
+                        );
+                      },
+                initialCameraPosition: _kGooglePlex,
+                markers: _markers,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                  setState(() {
+                    _markers.clear();
+                    _setMarkers(point);
+                  });       
                 },
-          initialCameraPosition: _kGooglePlex,
-          markers: _markers,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-            setState(() {
-              _markers.clear();
-              _setMarkers(point);
-            });       
-          },
-        ),
+              );
+            return new Scaffold(
+              body: googleMap,
       );
     }
   
