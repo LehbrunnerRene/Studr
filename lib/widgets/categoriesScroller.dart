@@ -172,8 +172,13 @@ class CategoriesScroller extends StatelessWidget {
             SizedBox(
               height: 200,
               width: 390,
-              child: FlatButton(
-                padding: EdgeInsets.all(0.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+                bottomLeft: Radius.circular(30),
+                ),
                 child: MapSample())
             ),
           ],
