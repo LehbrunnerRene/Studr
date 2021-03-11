@@ -1,0 +1,60 @@
+{
+  "hairdresser": [
+    {
+      "id": 1,
+      "title": "Figarouno",
+      "description": "Neues Styling, kreative Schnitte oder klassisch.",
+      "priceSection": "€",
+      "icon": "figarouno2.png",
+      "salon": "sturmayr-salon.png"
+    },
+    {
+      "id": 2,
+      "title": "Klipp",
+      "description": "Neues Styling, kreative Schnitte oder klassisch.",
+      "priceSection": "€€€",
+      "icon": "Klipp.jpg",
+      "salon": "sturmayr-salon.png"
+    },
+    {
+      "id": 3,
+      "title": "Sturmayr",
+      "description": "Neues Styling, kreative Schnitte oder klassisch.",
+      "priceSection": "€€",
+      "icon": "Sturmayr2.jpg",
+      "salon": "sturmayr-salon.png"
+    },
+    {
+      "id": 4,
+      "title": "Red Level",
+      "description": "Neues Styling, kreative Schnitte oder klassisch.",
+      "priceSection": "€€",
+      "icon": "RedLevel1.png",
+      "salon": "sturmayr-salon.png"
+    },
+    {
+      "id": 5,
+      "title": "Schnittzone",
+      "description": "Neues Styling, kreative Schnitte oder klassisch.",
+      "priceSection": "€",
+      "icon": "Schnittzone.jpg",
+      "salon": "sturmayr-salon.png"
+    },
+    {
+      "id": 6,
+      "title": "Barbershop",
+      "description": "Neues Styling, kreative Schnitte oder klassisch.",
+      "priceSection": "€",
+      "icon": "fessler_barbershop.png",
+      "salon": "sturmayr-salon.png"
+    },
+    {
+      "id": 7,
+      "title": "Stylepark",
+      "description": "Neues Styling, kreative Schnitte oder klassisch.",
+      "priceSection": "€",
+      "icon": "Stylepark.png",
+      "salon": "sturmayr-salon.png"
+    }
+  ]
+}

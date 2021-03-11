@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:studr/widgets/categoriesScroller.dart';
 
+import '../models/hairdressers.dart';
 import '../main.dart';
 import '../models/hairdresser.dart';
 import 'detail_screen.dart';
+import 'package:http/http.dart' as http;
 
 import '../widgets/hairdresserList.dart';
 
@@ -12,8 +14,9 @@ class ProductsOverviewScreen extends StatefulWidget {
   _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
 }
 
-class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
+const url = 'https://studr-7efe3-default-rtdb.firebaseio.com/hairdresser.json';
 
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   final List<Hairdresser> loadedItems = [
     Hairdresser(
       id: 1,
@@ -73,7 +76,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       salon: 'sturmayr-salon.png',
     ),
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

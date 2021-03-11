@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:studr/models/hairdresser.dart';
+import 'package:studr/models/hairdressers.dart';
 import 'package:studr/widgets/auth.dart';
 
 import '../models/http_exception.dart';
