@@ -9,7 +9,7 @@ import 'hairdresser.dart';
 class Hairdressers with ChangeNotifier {
   Future<void> addHairdresser(List<Hairdresser> hairdressers) async {
     const url =
-        'https://studr-7efe3-default-rtdb.firebaseio.com/hairdressers.json';
+        'https://studr-305121-default-rtdb.firebaseio.com/hairdressers.json';
     try {
       for (var item in hairdressers) {
         final response = await http.post(
