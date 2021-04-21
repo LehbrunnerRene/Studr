@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:studr/models/hairdresser.dart';
+import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/widgets/hairdresserList.dart';
 
 import 'categoriesScroller.dart';
@@ -72,6 +74,7 @@ class TopAppBar extends StatelessWidget {
       salon: 'sturmayr-salon.png',
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,14 +130,16 @@ class TopAppBar extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 100,),
+          SizedBox(
+            height: 100,
+          ),
           AnimatedOpacity(
             duration: const Duration(microseconds: 200),
             opacity: 1,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               alignment: Alignment.topCenter,
-              child: CategoriesScroller(loadedItems),
+              child: CategoriesScroller(),
             ),
           ),
           Text(

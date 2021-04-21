@@ -3,17 +3,17 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:studr/models/hairdresser.dart';
+import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/screens/detail_screen.dart';
 import 'package:studr/widgets/topAppBar.dart';
 
 class CategoriesScroller extends StatelessWidget {
-  final List<Hairdresser> loadedItems;
-
-  const CategoriesScroller(this.loadedItems);
-
   @override
   Widget build(BuildContext context) {
+    final hairdresserData = Provider.of<Hairdressers>(context);
+    final loadedHairdresser = hairdresserData.items;
     final double categoryHeight =
         MediaQuery.of(context).size.height * 0.30 - 50;
     return Scaffold(
@@ -71,7 +71,7 @@ class CategoriesScroller extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: this.loadedItems.length,
+                itemCount: loadedHairdresser.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return GestureDetector(
@@ -80,7 +80,7 @@ class CategoriesScroller extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  DetailScreen(loadedItems[index])));
+                                  DetailScreen(loadedHairdresser[index])));
                     },
                     child: SingleChildScrollView(
                       physics: BouncingScrollPhysics(),
@@ -116,7 +116,7 @@ class CategoriesScroller extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Image.asset(
-                                        'assets/icons/${loadedItems[index].icon}',
+                                        'assets/icons/${loadedHairdresser[index].icon}',
                                         fit: BoxFit.cover,
                                         width: 85,
                                         height: 75,
@@ -131,7 +131,7 @@ class CategoriesScroller extends StatelessWidget {
                                       Container(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          loadedItems[index].title,
+                                          loadedHairdresser[index].title,
                                           style: TextStyle(
                                             fontSize: 20,
                                             color: Colors.black,
@@ -144,7 +144,8 @@ class CategoriesScroller extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            loadedItems[index].priceSection,
+                                            loadedHairdresser[index]
+                                                .priceSection,
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.black),

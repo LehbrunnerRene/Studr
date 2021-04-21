@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/screens/auth_screen.dart';
 import 'package:studr/screens/map_screen.dart';
 import 'package:studr/screens/search_screen.dart';
@@ -19,11 +20,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
+        ChangeNotifierProvider(
+          create: (ctx) => Hairdressers(),
+        ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
           title: 'Studr',
-          home: auth.isAuth ? MyAppBar() : AuthScreen(),
+          home: /*auth.isAuth ?*/ MyAppBar() /*: AuthScreen()*/,
         ),
       ),
     );

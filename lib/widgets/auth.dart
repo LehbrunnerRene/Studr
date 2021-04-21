@@ -2,9 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-import 'package:studr/models/hairdresser.dart';
-import 'package:studr/models/hairdressers.dart';
 
 import '../models/http_exception.dart';
 

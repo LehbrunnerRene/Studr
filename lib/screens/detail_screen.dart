@@ -6,7 +6,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:studr/models/hairdresser.dart';
+import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/screens/map_saloon.dart';
 import 'package:studr/screens/map_screen.dart';
 import 'package:studr/screens/ratings_screen.dart';
@@ -15,7 +17,6 @@ import 'package:studr/widgets/divider.dart';
 import 'map_saloon.dart';
 
 import '../main.dart';
-
 
 LatLng point = LatLng(48.26865011002132, 14.251855200210889);
 
@@ -31,63 +32,59 @@ class MapSampleState extends State<MapSample> {
     target: point,
     zoom: 14.4746,
   );
-  
-    static final CameraPosition _kSaloon = CameraPosition(
-        bearing: 192.8334901395799,
-        target: point,
-        tilt: 59.440717697143555,
-        zoom: 18.151926040649414);
-  
-    @override
-    Widget build(BuildContext context) {
-      var googleMap = GoogleMap(
-                mapToolbarEnabled: false,
-                zoomGesturesEnabled: false,
-                rotateGesturesEnabled: false,
-                zoomControlsEnabled: false,
-                scrollGesturesEnabled: false,
-                mapType: MapType.hybrid,
-                onTap: (LatLng latLng) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MapScreenSaloon())
-                        );
-                      },
-                initialCameraPosition: _kGooglePlex,
-                markers: _markers,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                  setState(() {
-                    _markers.clear();
-                    _setMarkers(point);
-                  });       
-                },
-              );
-            return new Scaffold(
-              body: googleMap,
-      );
-    }
-  
-  
-  
-    int _markerIdCounter = 1;
-    Set<Marker> _markers = HashSet<Marker>();
-  
-    void _setMarkers(LatLng point){
-      final String markerIdVal = 'marker_id_$_markerIdCounter';
-      _markerIdCounter++;
-      setState((){
-        print('Marker | Latitude: ${point.latitude} Longitude: ${point.longitude}');
-        _markers.add(
-          Marker(
-            markerId: MarkerId(markerIdVal),
-            position: point,
-          ),
-        );
-      });
-    }
-}
 
+  static final CameraPosition _kSaloon = CameraPosition(
+      bearing: 192.8334901395799,
+      target: point,
+      tilt: 59.440717697143555,
+      zoom: 18.151926040649414);
+
+  @override
+  Widget build(BuildContext context) {
+    var googleMap = GoogleMap(
+      mapToolbarEnabled: false,
+      zoomGesturesEnabled: false,
+      rotateGesturesEnabled: false,
+      zoomControlsEnabled: false,
+      scrollGesturesEnabled: false,
+      mapType: MapType.hybrid,
+      onTap: (LatLng latLng) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => MapScreenSaloon()));
+      },
+      initialCameraPosition: _kGooglePlex,
+      markers: _markers,
+      onMapCreated: (GoogleMapController controller) {
+        _controller.complete(controller);
+        setState(() {
+          _markers.clear();
+          _setMarkers(point);
+        });
+      },
+    );
+    return new Scaffold(
+      body: googleMap,
+    );
+  }
+
+  int _markerIdCounter = 1;
+  Set<Marker> _markers = HashSet<Marker>();
+
+  void _setMarkers(LatLng point) {
+    final String markerIdVal = 'marker_id_$_markerIdCounter';
+    _markerIdCounter++;
+    setState(() {
+      print(
+          'Marker | Latitude: ${point.latitude} Longitude: ${point.longitude}');
+      _markers.add(
+        Marker(
+          markerId: MarkerId(markerIdVal),
+          position: point,
+        ),
+      );
+    });
+  }
+}
 
 class DetailScreen extends StatelessWidget {
   final Hairdresser selectedItem;
@@ -305,12 +302,10 @@ class DetailScreen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 150,
-              width: 350,
-              child: FlatButton(
-                padding: EdgeInsets.all(0.0),
-                child: MapSample())
-            ),
+                height: 150,
+                width: 350,
+                child: FlatButton(
+                    padding: EdgeInsets.all(0.0), child: MapSample())),
             SizedBox(
               height: 35,
             ),
