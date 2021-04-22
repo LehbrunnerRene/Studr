@@ -1,22 +1,16 @@
 import 'dart:async';
 import 'dart:async';
 import 'dart:collection';
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:studr/models/hairdresser.dart';
-import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/screens/map_saloon.dart';
-import 'package:studr/screens/map_screen.dart';
 import 'package:studr/screens/ratings_screen.dart';
-import 'package:studr/screens/search_screen.dart';
+import 'package:studr/screens/scheduler_screen.dart';
 import 'package:studr/widgets/divider.dart';
 import 'map_saloon.dart';
-
-import '../main.dart';
 
 LatLng point = LatLng(48.26865011002132, 14.251855200210889);
 
@@ -150,7 +144,13 @@ class DetailScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(50.0),
                         side: BorderSide(color: Colors.black)),
                     padding: const EdgeInsets.all(16.0),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SchedulerScreen(selectedItem)));
+                    },
                     color: Colors.blue.shade800,
                     textColor: Colors.white,
                     child: Icon(

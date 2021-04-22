@@ -26,6 +26,13 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
+          theme: ThemeData.from(
+            colorScheme: const ColorScheme.light(),
+          ).copyWith(
+              pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: <TargetPlatform, PageTransitionsBuilder>{
+                TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+              })),
           title: 'Studr',
           home: /*auth.isAuth ?*/ MyAppBar() /*: AuthScreen()*/,
         ),

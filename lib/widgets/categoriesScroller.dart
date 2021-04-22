@@ -4,10 +4,8 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:studr/models/hairdresser.dart';
 import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/screens/detail_screen.dart';
-import 'package:studr/widgets/topAppBar.dart';
 
 class CategoriesScroller extends StatelessWidget {
   @override
