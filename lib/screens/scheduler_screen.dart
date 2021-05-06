@@ -81,6 +81,25 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
                   },
                   label: Text("Date"),
                 ),
+                SizedBox(
+                  height: 150,
+                ),
+                ButtonTheme(
+                  minWidth: 200.0,
+                  height: 100.0,
+                  child: ElevatedButton.icon(
+                    label: Text('Termin Buchen'),
+                    icon: Icon(Icons.book_online),
+                    style: ElevatedButton.styleFrom(
+                        elevation: 5,
+                        primary: Colors.yellow,
+                        textStyle: TextStyle(fontSize: 24),
+                        shape: const BeveledRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        padding: EdgeInsets.all(20)),
+                    onPressed: () {},
+                  ),
+                ),
               ],
             ),
           ),
