@@ -10,7 +10,25 @@ class HairdresserList extends StatelessWidget {
     final loadedItems = Provider.of<Hairdressers>(context).items;
     return Column(
       children: [
-        TextFormField(),
+        SizedBox(
+          height: 30,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 5.0,
+            right: 5.0,
+          ),
+          child: TextFormField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: "Search",
+            ),
+          ),
+        ),
+        Divider(
+          color: Colors.black,
+          thickness: 2,
+        ),
         Expanded(
           child: ListView.builder(
             itemCount: loadedItems.length,
