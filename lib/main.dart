@@ -7,6 +7,7 @@ import 'package:studr/screens/search_screen.dart';
 import 'package:studr/widgets/auth.dart';
 
 import 'screens/hairdresser_overview_screen.dart';
+import 'widgets/hairdresserList.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,7 +51,7 @@ class _MyAppBarState extends State<MyAppBar> {
   int _currentTab = 0;
   final List<Widget> _children = [
     ProductsOverviewScreen(),
-    SearchScreen(),
+    HairdresserList(),
     MapScreen(),
   ];
 
