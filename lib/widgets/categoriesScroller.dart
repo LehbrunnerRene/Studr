@@ -13,7 +13,7 @@ class CategoriesScroller extends StatelessWidget {
     final hairdresserData = Provider.of<Hairdressers>(context);
     final loadedHairdresser = hairdresserData.items;
     final double categoryHeight =
-        MediaQuery.of(context).size.height * 0.30 - 50;
+        MediaQuery.of(context).size.height * 0.30 - 45;
     return Scaffold(
       body: SafeArea(
         child: Column(

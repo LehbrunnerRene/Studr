@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:studr/models/hairdresser.dart';
 import 'package:studr/screens/map_saloon.dart';
+import 'package:studr/screens/rating_add_screen.dart';
 import 'package:studr/screens/ratings_screen.dart';
 import 'package:studr/screens/scheduler_screen.dart';
 import 'package:studr/widgets/divider.dart';
@@ -771,12 +772,21 @@ class DetailScreen extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    "Bewertung schreiben",
-                    style: TextStyle(
-                      fontSize: 15.5,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue.shade800,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  AddRating(this.selectedItem)));
+                    },
+                    child: Text(
+                      "Bewertung schreiben",
+                      style: TextStyle(
+                        fontSize: 15.5,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue.shade800,
+                      ),
                     ),
                   ),
                 ],
