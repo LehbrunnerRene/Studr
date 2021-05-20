@@ -75,6 +75,7 @@ class Hairdressers with ChangeNotifier {
         _prices.add(element.data());
       });
     });
+    notifyListeners();
   }
 
   Future<dynamic> getRatings() async {
@@ -86,5 +87,6 @@ class Hairdressers with ChangeNotifier {
         _ratings.add(element.data());
       });
     });
+    notifyListeners();
   }
 }
