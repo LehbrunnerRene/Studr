@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:studr/models/hairdresser.dart';
 import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/widgets/categoriesScroller.dart';
 
@@ -12,6 +13,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   @override
   void initState() {
     Provider.of<Hairdressers>(context, listen: false).fetchAndSetHairdresser();
+    Provider.of<Hairdressers>(context, listen: false).getInformation();
+    Provider.of<Hairdressers>(context, listen: false).getPrices();
+    Provider.of<Hairdressers>(context, listen: false).getRatings();
     super.initState();
   }
 
