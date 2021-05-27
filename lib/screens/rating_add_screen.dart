@@ -3,19 +3,26 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:studr/models/hairdresser.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-class AddRating extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey();
+class AddRating extends StatefulWidget {
   final Hairdresser selectedItem;
 
   AddRating(this.selectedItem);
+
+  @override
+  _AddRatingState createState() => _AddRatingState();
+}
+
+class _AddRatingState extends State<AddRating> {
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     var name;
     var comment;
-    var rating;
+    var rating = 0.0;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -31,7 +38,7 @@ class AddRating extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(children: <Widget>[
               Image.asset(
-                'assets/icons/${selectedItem.icon}',
+                'assets/icons/${widget.selectedItem.icon}',
                 fit: BoxFit.cover,
                 height: deviceSize.height * 0.25,
               ),
@@ -45,15 +52,21 @@ class AddRating extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 onSaved: (value) => comment = value,
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Bewertung'),
-                keyboardType: TextInputType.number,
-                onSaved: (value) => rating = value,
+              RatingBar.builder(
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (v) {
+                  rating = v;
+                },
+                allowHalfRating: true,
               ),
               SizedBox(height: deviceSize.height * 0.10),
               ElevatedButton(
                 onPressed: () {
                   _formKey.currentState.save();
+
                   FirebaseFirestore.instance
                       .collection("Hairdresser/5IQWZYUyMCjNxFdM07lE/Ratings")
                       .add(
