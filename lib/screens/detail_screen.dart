@@ -1,12 +1,16 @@
 import 'dart:async';
-import 'dart:async';
 import 'dart:collection';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:studr/models/hairdresser.dart';
+import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/screens/map_saloon.dart';
+import 'package:studr/screens/rating_add_screen.dart';
 import 'package:studr/screens/ratings_screen.dart';
 import 'package:studr/screens/scheduler_screen.dart';
 import 'package:studr/widgets/divider.dart';
@@ -80,13 +84,22 @@ class MapSampleState extends State<MapSample> {
   }
 }
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final Hairdresser selectedItem;
 
   DetailScreen(this.selectedItem);
 
   @override
+  _DetailScreenState createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  @override
   Widget build(BuildContext context) {
+    final information = Provider.of<Hairdressers>(context).information;
+    final prices = Provider.of<Hairdressers>(context).prices;
+    final ratings = Provider.of<Hairdressers>(context).ratings;
+
     return Scaffold(
       //bottomNavigationBar: MyAppBar(),
       body: SingleChildScrollView(
@@ -97,7 +110,7 @@ class DetailScreen extends StatelessWidget {
               width: double.infinity,
               child: Image(
                 width: double.infinity,
-                image: AssetImage('assets/salons/${selectedItem.salon}'),
+                image: AssetImage('assets/salons/${widget.selectedItem.salon}'),
               ),
             ),
             Container(
@@ -115,7 +128,7 @@ class DetailScreen extends StatelessWidget {
                 Container(
                   width: 195,
                   child: Text(
-                    selectedItem.title,
+                    widget.selectedItem.title,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -127,7 +140,7 @@ class DetailScreen extends StatelessWidget {
                   width: 30,
                 ),
                 Text(
-                  selectedItem.priceSection,
+                  widget.selectedItem.priceSection,
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 30,
@@ -149,7 +162,7 @@ class DetailScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  SchedulerScreen(selectedItem)));
+                                  SchedulerScreen(widget.selectedItem)));
                     },
                     color: Colors.blue.shade800,
                     textColor: Colors.white,
@@ -169,7 +182,7 @@ class DetailScreen extends StatelessWidget {
                 Container(
                   width: 220,
                   child: Text(
-                    selectedItem.description,
+                    widget.selectedItem.description,
                     style: TextStyle(
                       fontStyle: FontStyle.italic,
                       fontSize: 15,
@@ -217,7 +230,7 @@ class DetailScreen extends StatelessWidget {
                   width: 20,
                 ),
                 Text(
-                  "+43 676 842803815",
+                  information.elementAt(0)["phone number"],
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -578,7 +591,7 @@ class DetailScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Paul Pils",
+                    ratings.elementAt(0)["name"],
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -771,12 +784,21 @@ class DetailScreen extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    "Bewertung schreiben",
-                    style: TextStyle(
-                      fontSize: 15.5,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue.shade800,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  AddRating(this.widget.selectedItem)));
+                    },
+                    child: Text(
+                      "Bewertung schreiben",
+                      style: TextStyle(
+                        fontSize: 15.5,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue.shade800,
+                      ),
                     ),
                   ),
                 ],
