@@ -23,21 +23,22 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
 
-     return Scaffold(
-       body: Stack(
-         children: <Widget>[
-           Container(height: MediaQuery.of(context).size.height * .6,
-           child: PageView.builder(
-             itemBuilder: (context, index){
-               return Image.asset('assets/icons/${widget.selectedItem["icon"]}',
-               fit: BoxFit.cover,
-               );
-             },
-           ))
-         ]
-       )
-    );
-    
+    return Scaffold(
+        body: Stack(children: <Widget>[
+      Container(
+          height: MediaQuery.of(context).size.height * .6,
+          child: PageView.builder(
+            itemBuilder: (context, index) {
+              return Image.asset(
+                'assets/icons/${widget.selectedItem["icon"]}',
+                fit: BoxFit.cover,
+              );
+            },
+          )),
+      buttonClose(context),
+      openingBar()
+    ]));
+
     /*return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -122,6 +123,51 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
         ),
       ),
     );*/
+  }
+
+  Align buttonClose(BuildContext context) {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Container(
+        margin: EdgeInsets.only(right: 24, top: 45),
+        child: IconButton(
+          icon: Icon(
+            Icons.close,
+            color: Colors.black87,
+            ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
+    );
+  }
+
+  Container openingBar() {
+    return Container(
+      margin: EdgeInsets.only(left: 24, top: 50),
+      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+      decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.all(
+            Radius.circular(25),
+          )),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Icon(
+            Icons.lock_clock,
+            size: 30,
+            color: Colors.green,
+          ),
+          Text(
+            "Jetzt geöffnet",
+            style: TextStyle(color: Colors.black, fontSize: 20),
+          )
+        ],
+      ),
+    );
   }
 }
 
