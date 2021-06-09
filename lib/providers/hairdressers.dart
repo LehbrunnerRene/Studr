@@ -10,6 +10,7 @@ class Hairdressers with ChangeNotifier {
   List<dynamic> _information = [];
   List<dynamic> _prices = [];
   List<dynamic> _ratings = [];
+  List<dynamic> _hairdressers = [];
 
   List<Hairdresser> get items {
     return [..._items];
@@ -25,6 +26,10 @@ class Hairdressers with ChangeNotifier {
 
   List<dynamic> get ratings {
     return [..._ratings];
+  }
+
+  List<dynamic> get hairdressers {
+    return [..._hairdressers];
   }
 
   Future<void> fetchAndSetHairdresser() async {
@@ -85,6 +90,18 @@ class Hairdressers with ChangeNotifier {
         .then((value) {
       value.docs.forEach((element) {
         _ratings.add(element.data());
+      });
+    });
+    notifyListeners();
+  }
+
+  Future<dynamic> getHairdressers() async {
+    await FirebaseFirestore.instance
+        .collection("Hairdresser")
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        _hairdressers.add(element.data());
       });
     });
     notifyListeners();

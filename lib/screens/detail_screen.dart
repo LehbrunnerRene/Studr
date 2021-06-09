@@ -99,7 +99,17 @@ class _DetailScreenState extends State<DetailScreen> {
     final information = Provider.of<Hairdressers>(context).information;
     final prices = Provider.of<Hairdressers>(context).prices;
     final ratings = Provider.of<Hairdressers>(context).ratings;
+    final hairdressers = Provider.of<Hairdressers>(context).hairdressers;
+    Map address = information.elementAt(widget.selectedItem.id-1)["address"]; 
 
+    var text = Text(
+                      "Bewertung schreiben",
+                      style: TextStyle(
+                        fontSize: 15.5,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue.shade800,
+                      ),
+                    );
     return Scaffold(
       //bottomNavigationBar: MyAppBar(),
       body: SingleChildScrollView(
@@ -128,7 +138,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 Container(
                   width: 195,
                   child: Text(
-                    widget.selectedItem.title,
+                    hairdressers.elementAt(widget.selectedItem.id-1)["title"],
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -230,7 +240,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 20,
                 ),
                 Text(
-                  information.elementAt(0)["phone number"],
+                  information.elementAt(widget.selectedItem.id-1)["phone number"],
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -251,7 +261,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 20,
                 ),
                 Text(
-                  "info@figarouno.at",
+                  information.elementAt(widget.selectedItem.id-1)["email"],
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -287,7 +297,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 65,
                 ),
                 Text(
-                  "8:00 - 18:00",
+                  information.elementAt(widget.selectedItem.id-1)["opening times"],
                   style: TextStyle(
                     fontSize: 15,
                   ),
@@ -307,7 +317,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 20,
                 ),
                 Text(
-                  "Nelkenweg 2, 4062 Thening",
+                  address["postal code"] + " " + address["city"] + ", " + address["street"],
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -371,7 +381,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 Container(
                   width: 280,
                   child: Text(
-                    "Schnitt ohne Waschen",
+                    "haalo",//prices.elementAt(0)["male"]["normal haircut"]["name"].toString(),
                     style: TextStyle(
                       fontSize: 18,
                       fontStyle: FontStyle.italic,
@@ -792,14 +802,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               builder: (context) =>
                                   AddRating(this.widget.selectedItem)));
                     },
-                    child: Text(
-                      "Bewertung schreiben",
-                      style: TextStyle(
-                        fontSize: 15.5,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue.shade800,
-                      ),
-                    ),
+                    child: text,
                   ),
                 ],
               ),

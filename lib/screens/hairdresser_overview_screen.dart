@@ -16,6 +16,8 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     Provider.of<Hairdressers>(context, listen: false).getInformation();
     Provider.of<Hairdressers>(context, listen: false).getPrices();
     Provider.of<Hairdressers>(context, listen: false).getRatings();
+    Provider.of<Hairdressers>(context, listen: false).getHairdressers();
+
     super.initState();
   }
 
