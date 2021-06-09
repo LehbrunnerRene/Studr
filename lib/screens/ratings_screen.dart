@@ -9,7 +9,7 @@ import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/widgets/divider.dart';
 
 class RatingsScreen extends StatelessWidget {
-  final Hairdresser selectedItem;
+  final dynamic selectedItem;
 
   RatingsScreen(this.selectedItem);
 
@@ -42,7 +42,7 @@ class RatingsScreen extends StatelessWidget {
                 ),
                 Text(
                   information
-                          .elementAt(this.selectedItem.id - 1)["rating"]
+                          .elementAt(this.selectedItem["id"] - 1)["rating"]
                           .toString()
                           .replaceAll('.', ',') +
                       " / 5,0",
@@ -57,7 +57,7 @@ class RatingsScreen extends StatelessWidget {
                 RatingBarIndicator(
                   itemCount: 5,
                   rating: information
-                      .elementAt(this.selectedItem.id - 1)["rating"]
+                      .elementAt(this.selectedItem["id"] - 1)["rating"]
                       .toDouble(),
                   direction: Axis.horizontal,
                   itemSize: 40,
@@ -154,7 +154,7 @@ class RatingsScreen extends StatelessWidget {
                   ],
                 );
               },
-            ),     
+            ),
           ],
         ),
       ),

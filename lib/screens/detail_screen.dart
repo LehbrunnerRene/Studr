@@ -100,8 +100,9 @@ class _DetailScreenState extends State<DetailScreen> {
     final prices = Provider.of<Hairdressers>(context).prices;
     final ratings = Provider.of<Hairdressers>(context).ratings;
     final hairdressers = Provider.of<Hairdressers>(context).hairdressers;
-    
-    Map address = information.elementAt(widget.selectedItem["id"] - 1)["address"];
+
+    Map address =
+        information.elementAt(widget.selectedItem["id"] - 1)["address"];
     var femalePrice = prices.elementAt(widget.selectedItem["id"] - 1)["Female"];
     var malePrice = prices.elementAt(widget.selectedItem["id"] - 1)["Male"];
 
@@ -155,8 +156,8 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 30,
                 ),
                 Text(
-                  information
-                      .elementAt(widget.selectedItem["id"] - 1)["price segment"],
+                  information.elementAt(
+                      widget.selectedItem["id"] - 1)["price segment"],
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 30,
@@ -505,7 +506,11 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 25,
                 ),
                 Text(
-                  information.elementAt(widget.selectedItem.id - 1)["rating"].toString().replaceAll('.', ',') + " / 5,0",
+                  information
+                          .elementAt(widget.selectedItem["id"] - 1)["rating"]
+                          .toString()
+                          .replaceAll('.', ',') +
+                      " / 5,0",
                   style: TextStyle(
                     fontSize: 30,
                     fontStyle: FontStyle.italic,
@@ -515,15 +520,17 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 40,
                 ),
                 RatingBarIndicator(
-                          itemCount: 5,
-                          rating: information.elementAt(widget.selectedItem.id - 1)["rating"].toDouble(),
-                          direction: Axis.horizontal,
-                          itemSize: 40,
-                          itemBuilder: (context, index) => Icon(
-                            Icons.star,
-                            color: Colors.black,
-                          ),
-                        ),
+                  itemCount: 5,
+                  rating: information
+                      .elementAt(widget.selectedItem["id"] - 1)["rating"]
+                      .toDouble(),
+                  direction: Axis.horizontal,
+                  itemSize: 40,
+                  itemBuilder: (context, index) => Icon(
+                    Icons.star,
+                    color: Colors.black,
+                  ),
+                ),
               ],
             ),
             SizedBox(
@@ -618,8 +625,11 @@ class _DetailScreenState extends State<DetailScreen> {
                 vertical: -4,
               ),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RatingsScreen(widget.selectedItem)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            RatingsScreen(widget.selectedItem)));
               },
               child: Row(
                 children: [
