@@ -11,7 +11,7 @@ class CategoriesScroller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hairdresserData = Provider.of<Hairdressers>(context);
-    final loadedHairdresser = hairdresserData.items;
+    final loadedHairdresser = hairdresserData.hairdressers;
     final double categoryHeight =
         MediaQuery.of(context).size.height * 0.30 - 45;
     return Scaffold(
@@ -114,7 +114,7 @@ class CategoriesScroller extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Image.asset(
-                                        'assets/icons/${loadedHairdresser[index].icon}',
+                                        'assets/icons/${loadedHairdresser[index]["icon"]}',
                                         fit: BoxFit.cover,
                                         width: 85,
                                         height: 75,
@@ -129,7 +129,7 @@ class CategoriesScroller extends StatelessWidget {
                                       Container(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          loadedHairdresser[index].title,
+                                          loadedHairdresser[index]["title"],
                                           style: TextStyle(
                                             fontSize: 20,
                                             color: Colors.black,
@@ -143,7 +143,7 @@ class CategoriesScroller extends StatelessWidget {
                                         children: [
                                           Text(
                                             loadedHairdresser[index]
-                                                .priceSection,
+                                                ["priceSection"],
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.black),

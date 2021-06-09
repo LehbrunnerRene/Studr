@@ -7,7 +7,7 @@ import 'package:animations/animations.dart';
 import 'package:intl/intl.dart';
 
 class SchedulerScreen extends StatefulWidget {
-  final Hairdresser selectedItem;
+  final dynamic selectedItem;
 
   SchedulerScreen(this.selectedItem);
   @override
@@ -36,7 +36,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
             child: Column(
               children: <Widget>[
                 Image.asset(
-                  'assets/icons/${widget.selectedItem.icon}',
+                  'assets/icons/${widget.selectedItem["icon"]}',
                   fit: BoxFit.cover,
                   height: deviceSize.height * 0.25,
                 ),
