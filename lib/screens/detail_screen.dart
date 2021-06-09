@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -100,8 +100,10 @@ class _DetailScreenState extends State<DetailScreen> {
     final prices = Provider.of<Hairdressers>(context).prices;
     final ratings = Provider.of<Hairdressers>(context).ratings;
     final hairdressers = Provider.of<Hairdressers>(context).hairdressers;
-    Map address =
-        information.elementAt(widget.selectedItem["id"] - 1)["address"];
+    
+    Map address = information.elementAt(widget.selectedItem["id"] - 1)["address"];
+    var femalePrice = prices.elementAt(widget.selectedItem["id"] - 1)["Female"];
+    var malePrice = prices.elementAt(widget.selectedItem["id"] - 1)["Male"];
 
     var text = Text(
       "Bewertung schreiben",
@@ -138,14 +140,14 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 15,
                 ),
                 Container(
-                  width: 195,
+                  width: 200,
                   child: Text(
                     hairdressers
                         .elementAt(widget.selectedItem["id"] - 1)["title"],
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 40,
+                      fontSize: 38,
                     ),
                   ),
                 ),
@@ -153,7 +155,8 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 30,
                 ),
                 Text(
-                  widget.selectedItem["priceSection"],
+                  information
+                      .elementAt(widget.selectedItem["id"] - 1)["price segment"],
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 30,
@@ -334,6 +337,9 @@ class _DetailScreenState extends State<DetailScreen> {
               ],
             ),
             SizedBox(
+              height: 10,
+            ),
+            SizedBox(
                 height: 150,
                 width: 350,
                 child: FlatButton(
@@ -379,59 +385,40 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
             DividerPadding(),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 23,
-                ),
-                Container(
-                  width: 280,
-                  child: Text(
-                    "haalo", //prices.elementAt(0)["male"]["normal haircut"]["name"].toString(),
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                    ),
+            ListView.builder(
+              itemCount: malePrice.length,
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              padding: EdgeInsets.all(0),
+              itemBuilder: (context, index) {
+                return Container(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 23,
+                      ),
+                      Container(
+                        width: 280,
+                        child: Text(
+                          malePrice[index]["name"],
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        malePrice[index]["price"].toString() + "€",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      )
+                    ],
                   ),
-                ),
-                Text(
-                  "20€",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontStyle: FontStyle.italic,
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 23,
-                ),
-                Container(
-                  width: 280,
-                  child: Text(
-                    "Schnitt mit Waschen",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ),
-                Text(
-                  "25€",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontStyle: FontStyle.italic,
-                  ),
-                )
-              ],
+                );
+              },
             ),
             SizedBox(
               height: 20,
@@ -454,86 +441,40 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
             DividerPadding(),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 23,
-                ),
-                Container(
-                  width: 280,
-                  child: Text(
-                    "Langhaar Schnitt",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                    ),
+            ListView.builder(
+              itemCount: femalePrice.length,
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              padding: EdgeInsets.all(0),
+              itemBuilder: (context, index) {
+                return Container(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 23,
+                      ),
+                      Container(
+                        width: 280,
+                        child: Text(
+                          femalePrice[index]["name"],
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        femalePrice[index]["price"].toString() + "€",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      )
+                    ],
                   ),
-                ),
-                Text(
-                  "40€",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontStyle: FontStyle.italic,
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 23,
-                ),
-                Container(
-                  width: 280,
-                  child: Text(
-                    "Kurzhaar Schnitt",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ),
-                Text(
-                  "30€",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontStyle: FontStyle.italic,
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 23,
-                ),
-                Container(
-                  width: 280,
-                  child: Text(
-                    "Färben",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ),
-                Text(
-                  "70€",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontStyle: FontStyle.italic,
-                  ),
-                )
-              ],
+                );
+              },
             ),
             SizedBox(
               height: 50,
@@ -564,201 +505,121 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 25,
                 ),
                 Text(
-                  "3,0 / 5,0",
+                  information.elementAt(widget.selectedItem.id - 1)["rating"].toString().replaceAll('.', ',') + " / 5,0",
                   style: TextStyle(
                     fontSize: 30,
                     fontStyle: FontStyle.italic,
                   ),
                 ),
                 SizedBox(
-                  width: 60,
+                  width: 40,
                 ),
-                Icon(
-                  Icons.star,
-                  size: 35,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 35,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 35,
-                ),
-                Icon(
-                  Icons.star_border,
-                  size: 35,
-                ),
-                Icon(
-                  Icons.star_border,
-                  size: 35,
-                ),
+                RatingBarIndicator(
+                          itemCount: 5,
+                          rating: information.elementAt(widget.selectedItem.id - 1)["rating"].toDouble(),
+                          direction: Axis.horizontal,
+                          itemSize: 40,
+                          itemBuilder: (context, index) => Icon(
+                            Icons.star,
+                            color: Colors.black,
+                          ),
+                        ),
               ],
             ),
             SizedBox(
               height: 10,
             ),
             DividerPadding(),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.bottomLeft,
-              padding: EdgeInsets.only(
-                left: 25.0,
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    ratings.elementAt(0)["name"],
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+            ListView.builder(
+              itemCount: 2,
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              padding: EdgeInsets.all(0),
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 5,
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 25,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 25,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 25,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 25,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 25,
-                ),
-                Icon(
-                  Icons.star_border,
-                  size: 25,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "16.01.2021",
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 25,
-                ),
-                Container(
-                  width: 300,
-                  child: Text(
-                    "Mein absoluter Liebliengsfriseur, gehe gerne dort hin. Top Beratung und sehr nettes Personal!",
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.grey.shade800,
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      padding: EdgeInsets.only(
+                        left: 25.0,
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            ratings[index]["name"],
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-            DividerPadding(),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.bottomLeft,
-              padding: EdgeInsets.only(
-                left: 25.0,
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    "Rene Lehbrunner",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                    SizedBox(
+                      height: 3,
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 25,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 25,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 25,
-                ),
-                Icon(
-                  Icons.star,
-                  size: 25,
-                ),
-                Icon(
-                  Icons.star_border,
-                  size: 25,
-                ),
-                Icon(
-                  Icons.star_border,
-                  size: 25,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "10.01.2021",
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 25,
-                ),
-                Container(
-                  width: 300,
-                  child: Text(
-                    "Der Schnitt gefällt mir sehr gut, jedoch musste ich etwas lange warten.",
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.grey.shade800,
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 22,
+                        ),
+                        RatingBarIndicator(
+                          itemCount: 5,
+                          rating: ratings[index]["rating"].toDouble(),
+                          direction: Axis.horizontal,
+                          itemSize: 30,
+                          itemBuilder: (context, index) => Icon(
+                            Icons.star,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "16.01.2021",
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-              ],
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 25,
+                        ),
+                        Container(
+                          width: 300,
+                          child: Text(
+                            ratings[index]["comment"],
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.grey.shade800,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    DividerPadding(),
+                  ],
+                );
+              },
             ),
-            SizedBox(
-              height: 10,
-            ),
-            DividerPadding(),
             FlatButton(
               visualDensity: VisualDensity(
                 vertical: -4,
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RatingsScreen()));
+                    MaterialPageRoute(builder: (context) => RatingsScreen(widget.selectedItem)));
               },
               child: Row(
                 children: [
