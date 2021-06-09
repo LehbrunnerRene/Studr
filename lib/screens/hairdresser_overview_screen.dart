@@ -12,7 +12,7 @@ class ProductsOverviewScreen extends StatefulWidget {
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   @override
   void initState() {
-    Provider.of<Hairdressers>(context, listen: false).fetchAndSetHairdresser();
+    //Provider.of<Hairdressers>(context, listen: false).fetchAndSetHairdresser();
     Provider.of<Hairdressers>(context, listen: false).getInformation();
     Provider.of<Hairdressers>(context, listen: false).getPrices();
     Provider.of<Hairdressers>(context, listen: false).getRatings();

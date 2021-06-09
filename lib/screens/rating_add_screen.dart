@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class AddRating extends StatefulWidget {
-  final Hairdresser selectedItem;
+  final dynamic selectedItem;
 
   AddRating(this.selectedItem);
 
@@ -38,7 +38,7 @@ class _AddRatingState extends State<AddRating> {
           child: SingleChildScrollView(
             child: Column(children: <Widget>[
               Image.asset(
-                'assets/icons/${widget.selectedItem.icon}',
+                'assets/icons/${widget.selectedItem["icon"]}',
                 fit: BoxFit.cover,
                 height: deviceSize.height * 0.25,
               ),

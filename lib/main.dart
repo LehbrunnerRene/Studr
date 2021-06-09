@@ -24,9 +24,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Hairdressers(),
+        ChangeNotifierProxyProvider<Auth, Hairdressers>(
+          update: (ctx, auth, previousHairdressers) => Hairdressers(
+            auth.token,
+            previousHairdressers == null ? [] : previousHairdressers.items,
+          ),
         ),
+        /*ChangeNotifierProvider(
+          create: (ctx) => Hairdressers(),
+        ),*/
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(

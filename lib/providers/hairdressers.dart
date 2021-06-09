@@ -6,11 +6,14 @@ import 'package:studr/models/hairdresser.dart';
 import 'package:http/http.dart' as http;
 
 class Hairdressers with ChangeNotifier {
+  final String authToken;
   List<Hairdresser> _items = [];
   List<dynamic> _information = [];
   List<dynamic> _prices = [];
   List<dynamic> _ratings = [];
   List<dynamic> _hairdressers = [];
+
+  Hairdressers(this.authToken, this._items);
 
   List<Hairdresser> get items {
     return [..._items];
@@ -32,9 +35,9 @@ class Hairdressers with ChangeNotifier {
     return [..._hairdressers];
   }
 
-  Future<void> fetchAndSetHairdresser() async {
-    const url =
-        'https://studr-305121-default-rtdb.firebaseio.com/hairdresser.json';
+  /*Future<void> fetchAndSetHairdresser() async {
+    final url =
+        'https://studr-305121-default-rtdb.firebaseio.com/hairdresser.json?auth=$authToken';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as List<dynamic>;
@@ -57,7 +60,7 @@ class Hairdressers with ChangeNotifier {
     } catch (error) {
       throw (error);
     }
-  }
+  }*/
 
   Future<dynamic> getInformation() async {
     await FirebaseFirestore.instance
