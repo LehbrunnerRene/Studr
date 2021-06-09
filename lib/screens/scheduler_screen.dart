@@ -22,7 +22,23 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    return Card(
+
+     return Scaffold(
+       body: Stack(
+         children: <Widget>[
+           Container(height: MediaQuery.of(context).size.height * .6,
+           child: PageView.builder(
+             itemBuilder: (context, index){
+               return Image.asset('assets/icons/${widget.selectedItem["icon"]}',
+               fit: BoxFit.cover,
+               );
+             },
+           ))
+         ]
+       )
+    );
+    
+    /*return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -105,7 +121,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           ),
         ),
       ),
-    );
+    );*/
   }
 }
 
