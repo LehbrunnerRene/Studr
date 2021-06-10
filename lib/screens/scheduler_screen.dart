@@ -17,9 +17,9 @@ class SchedulerScreen extends StatefulWidget {
 
 class _SchedulerScreenState extends State<SchedulerScreen> {
 
-  /*DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now();
   var txt = TextEditingController();
-  final DateFormat dateFormat = DateFormat('dd.MM.yyyy HH:mm');*/
+  final DateFormat dateFormat = DateFormat('dd.MM.yyyy HH:mm');
 
 
   @override
@@ -29,9 +29,17 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          loadImage(context),
+          //loadImage(context),
           buttonClose(context),
           openingBar(),
+          loadImageNew(deviceSize),
+          Container(
+            
+            
+            ),
+          
+
+
         ],
       ),
       bottomNavigationBar: Padding(
@@ -128,6 +136,27 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
         ),
       ),
     );*/
+  }
+
+  Container loadImageNew(Size deviceSize) {
+    return Container(
+          height: 260,
+          width: deviceSize.width * 0.90,
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Image.asset(
+                    'assets/icons/${widget.selectedItem["icon"]}',
+                    fit: BoxFit.cover,
+                    height: deviceSize.height * 0.27,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
   }
 
   Container loadImage(BuildContext context) {
