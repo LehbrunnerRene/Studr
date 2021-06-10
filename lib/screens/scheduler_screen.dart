@@ -16,11 +16,9 @@ class SchedulerScreen extends StatefulWidget {
 }
 
 class _SchedulerScreenState extends State<SchedulerScreen> {
-
   DateTime selectedDate = DateTime.now();
   var txt = TextEditingController();
   final DateFormat dateFormat = DateFormat('dd.MM.yyyy HH:mm');
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +29,65 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
         children: <Widget>[
           //loadImage(context),
           buttonClose(context),
-          openingBar(),
           loadImageNew(deviceSize),
+          //openingBar(),
           Container(
-            
-            
+              margin: EdgeInsets.only(top: 260, left: 40),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Termin wählen",
+                    style: TextStyle(
+                        color: Colors.orange,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )),
+
+          Container(
+            margin: EdgeInsets.only(top: 260, left: 40, right: 200),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 50,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Date'),
+                  controller: txt,
+                  onSaved: (value) {},
+                ),
+                ElevatedButton.icon(
+                  icon: Icon(Icons.date_range),
+                  onPressed: () async {
+                    final selectedDate = await _selectDateTime(context);
+                    if (selectedDate == null) return;
+
+                    print(selectedDate);
+
+                    final selectedTime = await _selectTime(context);
+                    if (selectedTime == null) return;
+                    print(selectedTime);
+
+                    setState(() {
+                      this.selectedDate = DateTime(
+                        selectedDate.day,
+                        selectedDate.month,
+                        selectedDate.year,
+                        selectedTime.hour,
+                        selectedTime.minute,
+                      );
+                      txt.text = dateFormat.format(selectedDate);
+                    });
+                  },
+                  label: Text("Date"),
+                ),
+                SizedBox(
+                  height: 150,
+                ),
+              ],
             ),
-          
-
-
+          ),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -140,23 +188,23 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
 
   Container loadImageNew(Size deviceSize) {
     return Container(
-          height: 260,
-          width: deviceSize.width * 0.90,
-          padding: EdgeInsets.all(16.0),
-          child: Form(
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Image.asset(
-                    'assets/icons/${widget.selectedItem["icon"]}',
-                    fit: BoxFit.cover,
-                    height: deviceSize.height * 0.27,
-                  ),
-                ],
+      height: 260,
+      width: deviceSize.width * 0.90,
+      padding: EdgeInsets.all(16.0),
+      child: Form(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Image.asset(
+                'assets/icons/${widget.selectedItem["icon"]}',
+                fit: BoxFit.cover,
+                height: deviceSize.height * 0.27,
               ),
-            ),
+            ],
           ),
-        );
+        ),
+      ),
+    );
   }
 
   Container loadImage(BuildContext context) {
@@ -192,7 +240,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
 
   Container openingBar() {
     return Container(
-      margin: EdgeInsets.only(left: 24, top: 50),
+      margin: EdgeInsets.only(left: 24, top: 250),
       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       decoration: BoxDecoration(
           color: Colors.grey,
