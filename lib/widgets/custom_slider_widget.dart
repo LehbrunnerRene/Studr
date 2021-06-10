@@ -32,13 +32,13 @@ class _CustomSliderWidget extends State<CustomSliderWidget> {
               children: <Widget>[
                 Center(
                   child: Text(
-                    _booked ? "Termin gebucht" : "Slide um zu Buchen",
+                    _booked ? "Termin gebucht" : "Buchen",
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
                 AnimatedContainer(
                   duration: Duration(milliseconds: 100),
-                  width: _width <= 55 ? 55 : _width,
+                  width: _width <= 57 ? 57 : _width,
                   child: Row(
                     children: <Widget>[
                       Expanded(child: SizedBox()),
