@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:studr/models/hairdresser.dart';
 import 'package:animations/animations.dart';
 import 'package:intl/intl.dart';
+import 'package:studr/widgets/custom_slider_widget.dart';
 
 class SchedulerScreen extends StatefulWidget {
   final dynamic selectedItem;
@@ -15,29 +16,33 @@ class SchedulerScreen extends StatefulWidget {
 }
 
 class _SchedulerScreenState extends State<SchedulerScreen> {
-  DateTime selectedDate = DateTime.now();
+
+  /*DateTime selectedDate = DateTime.now();
   var txt = TextEditingController();
-  final DateFormat dateFormat = DateFormat('dd.MM.yyyy HH:mm');
+  final DateFormat dateFormat = DateFormat('dd.MM.yyyy HH:mm');*/
+
 
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
-        body: Stack(children: <Widget>[
-      Container(
-          height: MediaQuery.of(context).size.height * .6,
-          child: PageView.builder(
-            itemBuilder: (context, index) {
-              return Image.asset(
-                'assets/icons/${widget.selectedItem["icon"]}',
-                fit: BoxFit.cover,
-              );
-            },
-          )),
-      buttonClose(context),
-      openingBar()
-    ]));
+      body: Stack(
+        children: <Widget>[
+          loadImage(context),
+          buttonClose(context),
+          openingBar(),
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * .15,
+          right: MediaQuery.of(context).size.width * .15,
+          bottom: 12,
+        ),
+        child: CustomSliderWidget(),
+      ),
+    );
 
     /*return Card(
       shape: RoundedRectangleBorder(
@@ -125,6 +130,19 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     );*/
   }
 
+  Container loadImage(BuildContext context) {
+    return Container(
+        height: MediaQuery.of(context).size.height * .6,
+        child: PageView.builder(
+          itemBuilder: (context, index) {
+            return Image.asset(
+              'assets/icons/${widget.selectedItem["icon"]}',
+              fit: BoxFit.cover,
+            );
+          },
+        ));
+  }
+
   Align buttonClose(BuildContext context) {
     return Align(
       alignment: Alignment.topRight,
@@ -134,7 +152,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           icon: Icon(
             Icons.close,
             color: Colors.black87,
-            ),
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
