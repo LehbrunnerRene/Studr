@@ -7,7 +7,7 @@ import '../screens/detail_screen.dart';
 class HairdresserList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final loadedItems = Provider.of<Hairdressers>(context).items;
+    final loadedItems = Provider.of<Hairdressers>(context).hairdressers;
     return Column(
       children: [
         SizedBox(
@@ -45,13 +45,13 @@ class HairdresserList extends StatelessWidget {
                                 DetailScreen(loadedItems[index])));
                   },
                   title: Text(
-                    loadedItems[index].title,
+                    loadedItems[index]["title"],
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   subtitle: Column(
                     children: [
                       Text(
-                        loadedItems[index].description,
+                        loadedItems[index]["description"],
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 15,
@@ -62,7 +62,7 @@ class HairdresserList extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            loadedItems[index].priceSection,
+                            loadedItems[index]["priceSection"],
                             style: TextStyle(
                                 fontStyle: FontStyle.italic,
                                 fontSize: 15,
@@ -86,8 +86,8 @@ class HairdresserList extends StatelessWidget {
                   contentPadding: EdgeInsets.all(20.0),
                   leading: CircleAvatar(
                     backgroundColor: Colors.grey,
-                    backgroundImage:
-                        AssetImage('assets/icons/${loadedItems[index].icon}'),
+                    backgroundImage: AssetImage(
+                        'assets/icons/${loadedItems[index]["icon"]}'),
                   ),
                 ),
               );
