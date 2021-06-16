@@ -96,6 +96,7 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
+    Provider.of<Hairdressers>(context).getInfo(widget.selectedItem["id"]);
     final information = Provider.of<Hairdressers>(context).information;
     final prices = Provider.of<Hairdressers>(context).prices;
     final ratings = Provider.of<Hairdressers>(context).ratings;

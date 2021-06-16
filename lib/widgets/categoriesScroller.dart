@@ -74,11 +74,10 @@ class CategoriesScroller extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailScreen(loadedHairdresser[index])));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return DetailScreen(loadedHairdresser[index]);
+                      }));
                     },
                     child: SingleChildScrollView(
                       physics: BouncingScrollPhysics(),

@@ -74,6 +74,22 @@ class Hairdressers with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<dynamic> getInfo(id) async {
+    await FirebaseFirestore.instance
+        .collection("Hairdresser")
+        .where("id", isEqualTo: id)
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              element.reference
+                  .collection("Information")
+                  .get()
+                  .then((value) => value.docs.forEach((element) {
+                        _information.add(element.data());
+                      }));
+            }));
+    notifyListeners();
+  }
+
   Future<dynamic> getPrices() async {
     await FirebaseFirestore.instance
         .collection("Hairdresser/5IQWZYUyMCjNxFdM07lE/Prices")
