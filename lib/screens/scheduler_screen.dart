@@ -17,6 +17,7 @@ class SchedulerScreen extends StatefulWidget {
 
 class _SchedulerScreenState extends State<SchedulerScreen> {
   DateTime selectedDate = DateTime.now();
+  DateTime selectedTime = DateTime.now();
 
   var txt = TextEditingController();
   final DateFormat dateFormat = DateFormat('dd.MM.yyyy');
@@ -34,6 +35,13 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           //openingBar(),
           //Title(),
           datePicker(context),
+         CupertinoDatePicker(
+                initialDateTime: selectedDate,
+                mode: CupertinoDatePickerMode.time,
+                use24hFormat: true,
+                onDateTimeChanged: (selectedTime) =>
+                  setState(() => this.selectedTime = selectedTime),
+         ),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -42,16 +50,18 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           right: MediaQuery.of(context).size.width * .15,
           bottom: 12,
         ),
-        child: CustomSliderWidget(widget.selectedItem, selectedDate),
+        child: CustomSliderWidget(widget.selectedItem, selectedDate, selectedTime),
       ),
     );
   }
+
+
 
   Row datePicker(BuildContext context) {
     return Row(
       children: [
         SizedBox(
-          height: 660,
+          height: 640,
           width: 40,
         ),
         Column(
@@ -77,10 +87,10 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
                 color: Colors.greenAccent,
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(5.0))),
-            )
-            
+            ),
           ],
         ),
+        SizedBox(height: 10,),
       ],
     );
   }
