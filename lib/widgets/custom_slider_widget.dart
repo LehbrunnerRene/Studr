@@ -1,11 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CustomSliderWidget extends StatefulWidget {
+  final dynamic selectedItem;
+  final dynamic selectedDate;
+  
+  CustomSliderWidget(this.selectedItem, this.selectedDate);
   @override
   _CustomSliderWidget createState() => _CustomSliderWidget();
 }
 
 class _CustomSliderWidget extends State<CustomSliderWidget> {
+  final GlobalKey<FormState> _formKey = GlobalKey();
   var _maxWidth = 0.0;
   var _width = 0.0;
   var _value = 0.0;
@@ -77,6 +83,15 @@ class _CustomSliderWidget extends State<CustomSliderWidget> {
   void _onEnd(DragEndDetails details) {
     if(_value > 0.9){
       _value = 1;
+
+      FirebaseFirestore.instance
+        .collection("Booking")
+        .add(
+      {
+        'name': widget.selectedItem["title"],
+        'date': widget.selectedDate
+      },
+    );
     } else{
       _value = 0;
     }

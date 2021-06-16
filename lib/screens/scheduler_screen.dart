@@ -33,7 +33,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           loadImageNew(deviceSize),
           //openingBar(),
           //Title(),
-          datePicker(context)
+          datePicker(context),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -42,7 +42,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           right: MediaQuery.of(context).size.width * .15,
           bottom: 12,
         ),
-        child: CustomSliderWidget(),
+        child: CustomSliderWidget(widget.selectedItem, selectedDate),
       ),
     );
   }
@@ -104,7 +104,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
   Container loadImageNew(Size deviceSize) {
     return Container(
       height: 260,
-      width: deviceSize.width * 0.90,
+      width: deviceSize.width * 0.97,
       padding: EdgeInsets.all(16.0),
       child: Form(
         child: SingleChildScrollView(
@@ -139,7 +139,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     return Align(
       alignment: Alignment.topRight,
       child: Container(
-        margin: EdgeInsets.only(right: 24, top: 45),
+        margin: EdgeInsets.only(right: 2, top: 45),
         child: IconButton(
           icon: Icon(
             Icons.close,
