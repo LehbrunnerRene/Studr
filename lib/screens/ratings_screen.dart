@@ -16,7 +16,13 @@ class RatingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final information = Provider.of<Hairdressers>(context).information;
-    final ratings = Provider.of<Hairdressers>(context).ratings;
+    var ratings = Provider.of<Hairdressers>(context).ratings;
+    List diffRating = [];
+    ratings.forEach((element) {
+      if (element["ratingId"] == this.selectedItem["id"]) {
+        diffRating.add(element);
+      }
+    });
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -73,7 +79,7 @@ class RatingsScreen extends StatelessWidget {
             ),
             DividerPadding(),
             ListView.builder(
-              itemCount: ratings.length,
+              itemCount: diffRating.length,
               shrinkWrap: true,
               physics: ScrollPhysics(),
               padding: EdgeInsets.all(0),
@@ -91,7 +97,7 @@ class RatingsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            ratings[index]["name"],
+                            diffRating[index]["name"],
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -110,7 +116,7 @@ class RatingsScreen extends StatelessWidget {
                         ),
                         RatingBarIndicator(
                           itemCount: 5,
-                          rating: ratings[index]["rating"].toDouble(),
+                          rating: diffRating[index]["rating"].toDouble(),
                           direction: Axis.horizontal,
                           itemSize: 30,
                           itemBuilder: (context, index) => Icon(
@@ -137,7 +143,7 @@ class RatingsScreen extends StatelessWidget {
                         Container(
                           width: 300,
                           child: Text(
-                            ratings[index]["comment"],
+                            diffRating[index]["comment"],
                             style: TextStyle(
                               fontSize: 17,
                               fontStyle: FontStyle.italic,

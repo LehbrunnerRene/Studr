@@ -68,14 +68,22 @@ class _AddRatingState extends State<AddRating> {
                   _formKey.currentState.save();
 
                   FirebaseFirestore.instance
-                      .collection("Hairdresser/5IQWZYUyMCjNxFdM07lE/Ratings")
-                      .add(
-                    {
-                      'name': name,
-                      'comment': comment,
-                      'rating': rating,
-                    },
-                  );
+                      .collection("Hairdresser")
+                      .where("id", isEqualTo: widget.selectedItem["id"])
+                      .get()
+                      .then(
+                        (value) => value.docs.forEach((element) {
+                          element.reference.collection("Ratings").add(
+                            {
+                              'name': name,
+                              'comment': comment,
+                              'rating': rating,
+                              'ratingId': widget.selectedItem["id"]
+                            },
+                          );
+                        }),
+                      );
+
                   Navigator.pop(context);
                 },
                 child: const Text("Bewerten"),

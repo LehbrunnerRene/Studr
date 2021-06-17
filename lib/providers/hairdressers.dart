@@ -24,7 +24,7 @@ class Hairdressers with ChangeNotifier {
   }
 
   List<dynamic> get prices {
-    return [..._prices];
+    return [..._prices.reversed.toList()];
   }
 
   List<dynamic> get ratings {
@@ -74,17 +74,49 @@ class Hairdressers with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<dynamic> getInfo(id) async {
+  Future<dynamic> getInfo() async {
     await FirebaseFirestore.instance
         .collection("Hairdresser")
-        .where("id", isEqualTo: id)
+        .orderBy("id")
         .get()
         .then((value) => value.docs.forEach((element) {
               element.reference
                   .collection("Information")
                   .get()
                   .then((value) => value.docs.forEach((element) {
+                        print(element.data());
                         _information.add(element.data());
+                      }));
+            }));
+  }
+
+  Future<dynamic> getPric() async {
+    await FirebaseFirestore.instance
+        .collection("Hairdresser")
+        .orderBy("id")
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              element.reference
+                  .collection("Prices")
+                  .get()
+                  .then((value) => value.docs.forEach((element) {
+                        print(element.data());
+                        _prices.add(element.data());
+                      }));
+            }));
+  }
+
+  Future<dynamic> getRating() async {
+    await FirebaseFirestore.instance
+        .collection("Hairdresser")
+        .orderBy("id")
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              element.reference
+                  .collection("Ratings")
+                  .get()
+                  .then((value) => value.docs.forEach((element) {
+                        _ratings.add(element.data());
                       }));
             }));
     notifyListeners();

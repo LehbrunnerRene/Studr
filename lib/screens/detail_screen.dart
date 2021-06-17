@@ -96,7 +96,6 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
-    Provider.of<Hairdressers>(context).getInfo(widget.selectedItem["id"]);
     final information = Provider.of<Hairdressers>(context).information;
     final prices = Provider.of<Hairdressers>(context).prices;
     final ratings = Provider.of<Hairdressers>(context).ratings;
@@ -104,8 +103,14 @@ class _DetailScreenState extends State<DetailScreen> {
 
     Map address =
         information.elementAt(widget.selectedItem["id"] - 1)["address"];
+    var malePrice = prices.elementAt(1)["Male"];
     var femalePrice = prices.elementAt(widget.selectedItem["id"] - 1)["Female"];
-    var malePrice = prices.elementAt(widget.selectedItem["id"] - 1)["Male"];
+    List diffRating = [];
+    ratings.forEach((element) {
+      if (element["ratingId"] == widget.selectedItem["id"]) {
+        diffRating.add(element);
+      }
+    });
 
     var text = Text(
       "Bewertung schreiben",
@@ -539,7 +544,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             DividerPadding(),
             ListView.builder(
-              itemCount: 2,
+              itemCount: 1,
               shrinkWrap: true,
               physics: ScrollPhysics(),
               padding: EdgeInsets.all(0),
@@ -557,7 +562,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Column(
                         children: [
                           Text(
-                            ratings[index]["name"],
+                            diffRating[index]["name"],
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -576,7 +581,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                         RatingBarIndicator(
                           itemCount: 5,
-                          rating: ratings[index]["rating"].toDouble(),
+                          rating: diffRating[index]["rating"].toDouble(),
                           direction: Axis.horizontal,
                           itemSize: 30,
                           itemBuilder: (context, index) => Icon(
@@ -603,7 +608,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         Container(
                           width: 300,
                           child: Text(
-                            ratings[index]["comment"],
+                            diffRating[index]["comment"],
                             style: TextStyle(
                               fontSize: 17,
                               fontStyle: FontStyle.italic,
