@@ -35,13 +35,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           //openingBar(),
           //Title(),
           datePicker(context),
-         CupertinoDatePicker(
-                initialDateTime: selectedDate,
-                mode: CupertinoDatePickerMode.time,
-                use24hFormat: true,
-                onDateTimeChanged: (selectedTime) =>
-                  setState(() => this.selectedTime = selectedTime),
-         ),
+          timePicker(),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -55,21 +49,38 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     );
   }
 
+  Padding timePicker() {
+    return Padding(
+         padding: const EdgeInsets.only(
+           top: 380),
+         child: SizedBox(
+           height: 200,
+           child: CupertinoDatePicker(
+                  initialDateTime: selectedDate,
+                  mode: CupertinoDatePickerMode.time,
+                  use24hFormat: true,
+                  onDateTimeChanged: (selectedTime) =>
+                    setState(() => this.selectedTime = selectedTime),
+           ),
+         ),
+       );
+  }
+
 
 
   Row datePicker(BuildContext context) {
     return Row(
       children: [
         SizedBox(
-          height: 640,
-          width: 40,
+          height: 600,
+          width: 85,
         ),
         Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
               "${selectedDate.toLocal()}".split(' ')[0],
-              style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 20.0,
