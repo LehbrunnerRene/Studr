@@ -79,7 +79,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              "${selectedDate.toLocal()}".split(' ')[0],
+              "${dateFormat.format(selectedDate)}",
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
             SizedBox(
