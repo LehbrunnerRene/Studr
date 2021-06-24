@@ -14,11 +14,10 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   void initState() {
     //Provider.of<Hairdressers>(context, listen: false).fetchAndSetHairdresser();
     //Provider.of<Hairdressers>(context, listen: false).getInformation();
+    Provider.of<Hairdressers>(context, listen: false).getHairdressers();
     Provider.of<Hairdressers>(context, listen: false).getInfo();
     Provider.of<Hairdressers>(context, listen: false).getPric();
-
     Provider.of<Hairdressers>(context, listen: false).getRating();
-    Provider.of<Hairdressers>(context, listen: false).getHairdressers();
 
     super.initState();
   }

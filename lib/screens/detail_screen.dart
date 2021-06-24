@@ -96,13 +96,13 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final hairdressers = Provider.of<Hairdressers>(context).hairdressers;
     final information = Provider.of<Hairdressers>(context).information;
     final prices = Provider.of<Hairdressers>(context).prices;
     final ratings = Provider.of<Hairdressers>(context).ratings;
-    final hairdressers = Provider.of<Hairdressers>(context).hairdressers;
 
-    Map address =
-        information.elementAt(widget.selectedItem["id"] - 1)["address"];
+    /*Map address =
+        information.elementAt(widget.selectedItem["id"] - 1)["address"];*/
     var malePrice = prices.elementAt(1)["Male"];
     var femalePrice = prices.elementAt(widget.selectedItem["id"] - 1)["Female"];
     List diffRating = [];
@@ -162,8 +162,9 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 30,
                 ),
                 Text(
-                  information.elementAt(
-                      widget.selectedItem["id"] - 1)["price segment"],
+                  information
+                      .elementAt(widget.selectedItem["id"] - 1)
+                      .priceSegment,
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 30,
@@ -254,7 +255,8 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
                 Text(
                   information
-                      .elementAt(widget.selectedItem["id"] - 1)["phone number"],
+                      .elementAt(widget.selectedItem["id"] - 1)
+                      .phoneNumber,
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -275,7 +277,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 20,
                 ),
                 Text(
-                  information.elementAt(widget.selectedItem["id"] - 1)["email"],
+                  information.elementAt(widget.selectedItem["id"] - 1).email,
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -311,8 +313,9 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 65,
                 ),
                 Text(
-                  information.elementAt(
-                      widget.selectedItem["id"] - 1)["opening times"],
+                  information
+                      .elementAt(widget.selectedItem["id"] - 1)
+                      .openingTimes,
                   style: TextStyle(
                     fontSize: 15,
                   ),
@@ -332,11 +335,17 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 20,
                 ),
                 Text(
-                  address["postal code"] +
+                  information
+                          .elementAt(widget.selectedItem["id"] - 1)
+                          .postalCode +
                       " " +
-                      address["city"] +
+                      information
+                          .elementAt(widget.selectedItem["id"] - 1)
+                          .city +
                       ", " +
-                      address["street"],
+                      information
+                          .elementAt(widget.selectedItem["id"] - 1)
+                          .street,
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -513,7 +522,8 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
                 Text(
                   information
-                          .elementAt(widget.selectedItem["id"] - 1)["rating"]
+                          .elementAt(widget.selectedItem["id"] - 1)
+                          .rating
                           .toString()
                           .replaceAll('.', ',') +
                       " / 5,0",
@@ -528,7 +538,8 @@ class _DetailScreenState extends State<DetailScreen> {
                 RatingBarIndicator(
                   itemCount: 5,
                   rating: information
-                      .elementAt(widget.selectedItem["id"] - 1)["rating"]
+                      .elementAt(widget.selectedItem["id"] - 1)
+                      .rating
                       .toDouble(),
                   direction: Axis.horizontal,
                   itemSize: 40,

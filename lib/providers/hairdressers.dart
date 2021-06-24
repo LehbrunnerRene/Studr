@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:studr/models/hairdresser.dart';
 import 'package:http/http.dart' as http;
+import 'package:darq/darq.dart';
+import 'package:studr/models/information.dart';
 
 class Hairdressers with ChangeNotifier {
   final String authToken;
@@ -19,12 +21,26 @@ class Hairdressers with ChangeNotifier {
     return [..._items];
   }
 
-  List<dynamic> get information {
-    return [..._information];
+  List<Information> get information {
+    List<Information> test = [];
+    _information.forEach((element) {
+      test.add(new Information(
+          element["address"]["city"],
+          element["address"]["city"],
+          element["address"]["street"],
+          element["email"],
+          element["opening times"],
+          element["hId"],
+          element["phone number"],
+          element["price segment"],
+          element["rating"]));
+    });
+    test = test.orderBy((element) => element.hId).toList();
+    return [...test];
   }
 
   List<dynamic> get prices {
-    return [..._prices.reversed.toList()];
+    return [..._prices];
   }
 
   List<dynamic> get ratings {
@@ -62,7 +78,7 @@ class Hairdressers with ChangeNotifier {
     }
   }*/
 
-  Future<dynamic> getInformation() async {
+  /*Future<dynamic> getInformation() async {
     await FirebaseFirestore.instance
         .collection("Hairdresser/5IQWZYUyMCjNxFdM07lE/Information")
         .get()
@@ -72,22 +88,23 @@ class Hairdressers with ChangeNotifier {
       });
     });
     notifyListeners();
-  }
+  }*/
 
   Future<dynamic> getInfo() async {
-    await FirebaseFirestore.instance
+    var dresser = FirebaseFirestore.instance
         .collection("Hairdresser")
         .orderBy("id")
-        .get()
-        .then((value) => value.docs.forEach((element) {
-              element.reference
-                  .collection("Information")
-                  .get()
-                  .then((value) => value.docs.forEach((element) {
-                        print(element.data());
-                        _information.add(element.data());
-                      }));
-            }));
+        .get();
+    await dresser.then((value) => value.docs.forEach((element) {
+          element.reference
+              .collection("Information")
+              .get()
+              .then((value) => value.docs.forEach((element) {
+                    _information.add(element.data());
+                  }));
+        }));
+
+    notifyListeners();
   }
 
   Future<dynamic> getPric() async {
@@ -100,10 +117,10 @@ class Hairdressers with ChangeNotifier {
                   .collection("Prices")
                   .get()
                   .then((value) => value.docs.forEach((element) {
-                        print(element.data());
                         _prices.add(element.data());
                       }));
             }));
+    notifyListeners();
   }
 
   Future<dynamic> getRating() async {
