@@ -22,7 +22,7 @@ environment:
 
 dependencies:
   provider: ^4.3.3
-  http: ^0.12.2
+  http: ^0.13.4
   flutter:
     sdk: flutter
 
@@ -33,10 +33,11 @@ dependencies:
   animations: ^2.0.0
   intl: ^0.17.0
   flutter_rating_bar: ^4.0.0
-  firebase_core: ^0.7.0
-  cloud_firestore: ^0.16.0+1
+  firebase_core: ^1.7.0
+  cloud_firestore: ^2.5.3
   smooth_star_rating: ^1.1.1
   darq: ^1.1.1
+  firebase_auth: ^3.1.2
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studr/models/hairdresser.dart';
@@ -18,7 +20,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     Provider.of<Hairdressers>(context, listen: false).getInfo();
     Provider.of<Hairdressers>(context, listen: false).getPric();
     Provider.of<Hairdressers>(context, listen: false).getRating();
-
     super.initState();
   }
 

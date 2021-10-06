@@ -6,6 +6,7 @@ import 'package:studr/models/hairdresser.dart';
 import 'package:http/http.dart' as http;
 import 'package:darq/darq.dart';
 import 'package:studr/models/information.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Hairdressers with ChangeNotifier {
   final String authToken;
@@ -14,6 +15,7 @@ class Hairdressers with ChangeNotifier {
   List<dynamic> _prices = [];
   List<dynamic> _ratings = [];
   List<dynamic> _hairdressers = [];
+  String _username;
 
   Hairdressers(this.authToken, this._items);
 
@@ -174,4 +176,16 @@ class Hairdressers with ChangeNotifier {
     });
     notifyListeners();
   }
+
+  /*String getCurrentUsername() {
+    final User user = FirebaseAuth.instance.currentUser;
+    var docRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
+    String username;
+    docRef.get().then((snapshot) {
+      print(snapshot.data());
+      username = snapshot.data()["username"];
+    });
+    print(username);
+    return username;
+  }*/
 }

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +46,16 @@ class MyApp extends StatelessWidget {
                 TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
               })),
           title: 'Studr',
-          home: /*auth.isAuth ?*/ MyAppBar() /*: AuthScreen()*/,
+          //home: auth.isAuth ? MyAppBar() : AuthScreen(),
+          home: StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (ctx, userSnapshot) {
+                print(userSnapshot.hasData);
+                if (userSnapshot.hasData) {
+                  return MyAppBar();
+                }
+                return AuthScreen();
+              }),
         ),
       ),
     );
