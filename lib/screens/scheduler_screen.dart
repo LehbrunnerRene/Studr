@@ -22,6 +22,36 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
   var txt = TextEditingController();
   final DateFormat dateFormat = DateFormat('dd.MM.yyyy');
 
+  DateTime _date = DateTime.now();
+
+  Future<Null> _selectDate(BuildContext context) async {
+    var categoryHeight = MediaQuery.of(context).size;
+    DateTime _datePicker = await showDatePicker(
+        context: context,
+        initialDate: _date,
+        firstDate: DateTime(1947),
+        lastDate: DateTime(2030),
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData(
+              primarySwatch: Colors.blue,
+              primaryColor: Colors.blue,
+              accentColor: Colors.blue,
+            ),
+            child: child,
+          );
+        });
+
+    if (_datePicker != null && _datePicker != _date) {
+      setState(() {
+        _date = _datePicker;
+        print(
+          _date.toString(),
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -34,8 +64,13 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           loadImageNew(deviceSize),
           //openingBar(),
           //Title(),
-          datePicker(context),
-          timePicker(),
+          dateTitle(),
+          datePicker(),
+          workersTitle(),
+          workers(),
+          timesTitle(),
+          timeSlots()
+          //timePicker(),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -44,31 +79,541 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           right: MediaQuery.of(context).size.width * .15,
           bottom: 12,
         ),
-        child: CustomSliderWidget(widget.selectedItem, selectedDate, selectedTime),
+        child: ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.black)),
+          onPressed: () {},
+          child: const Text(
+            "Buchen",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+        //CustomSliderWidget(widget.selectedItem, selectedDate, selectedTime),
       ),
+    );
+  }
+
+  Container dateTitle() {
+    return Container(
+      margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * .27,
+          left: MediaQuery.of(context).size.width * .05),
+      child: Text(
+        "Datum wählen",
+        style: TextStyle(
+          fontSize: 19,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Container datePicker() {
+    return Container(
+      margin: EdgeInsets.only(
+          right: MediaQuery.of(context).size.width * .05,
+          top: MediaQuery.of(context).size.height * .32,
+          left: MediaQuery.of(context).size.width * .05),
+      child: TextFormField(
+        cursorColor: Colors.blue,
+        readOnly: true,
+        onTap: () {
+          setState(() {
+            _selectDate(context);
+          });
+        },
+        decoration: InputDecoration(
+          //labelText: 'Select Date',
+          //labelStyle: TextStyle(fontSize: 16.0, color: Colors.blue),
+          hintText: (_date.toString().replaceRange(10, 23, '')),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blue),
+            borderRadius: BorderRadius.circular(50.0),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container workersTitle() {
+    return Container(
+      margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * .42,
+          left: MediaQuery.of(context).size.width * .05),
+      child: Text(
+        "Mitarbeiter wählen",
+        style: TextStyle(
+          fontSize: 19,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Container workers() {
+    return Container(
+      margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * .47,
+          left: MediaQuery.of(context).size.width * .05),
+      child: Row(
+        children: [
+          Column(
+            children: [
+              Material(
+                elevation: 4.0,
+                shape: CircleBorder(
+                  side: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                ),
+                clipBehavior: Clip.hardEdge,
+                color: Colors.transparent,
+                child: Ink.image(
+                  image: AssetImage('assets/workers/worker1.jpg'),
+                  fit: BoxFit.cover,
+                  width: 75.0,
+                  height: 75.0,
+                  child: InkWell(
+                    onTap: () {},
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                "Martina",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 17,
+          ),
+          Column(
+            children: [
+              Material(
+                elevation: 4.0,
+                shape: CircleBorder(
+                  side: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                ),
+                clipBehavior: Clip.hardEdge,
+                color: Colors.transparent,
+                child: Ink.image(
+                  image: AssetImage('assets/workers/worker5.jpg'),
+                  fit: BoxFit.cover,
+                  width: 75.0,
+                  height: 75.0,
+                  child: InkWell(
+                    onTap: () {},
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                "Laura",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 17,
+          ),
+          Column(
+            children: [
+              Material(
+                elevation: 4.0,
+                shape: CircleBorder(
+                  side: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                ),
+                clipBehavior: Clip.hardEdge,
+                color: Colors.transparent,
+                child: Ink.image(
+                  image: AssetImage('assets/workers/worker3.jpg'),
+                  fit: BoxFit.cover,
+                  width: 75.0,
+                  height: 75.0,
+                  child: InkWell(
+                    onTap: () {},
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                "Sarah",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 17,
+          ),
+          Column(
+            children: [
+              Material(
+                elevation: 4.0,
+                shape: CircleBorder(
+                  side: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                ),
+                clipBehavior: Clip.hardEdge,
+                color: Colors.transparent,
+                child: Ink.image(
+                  image: AssetImage('assets/workers/worker4.jpg'),
+                  fit: BoxFit.cover,
+                  width: 75.0,
+                  height: 75.0,
+                  child: InkWell(
+                    onTap: () {},
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                "Mario",
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container timesTitle() {
+    return Container(
+      margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * .65,
+          left: MediaQuery.of(context).size.width * .05),
+      child: Text(
+        "Zeit wählen",
+        style: TextStyle(
+          fontSize: 19,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Container timeSlots() {
+    return Container(
+      margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * .7,
+          left: MediaQuery.of(context).size.width * .05),
+      child: Column(children: [
+        Row(
+          children: [
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "9:00",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "9:30",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "10:00",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "10:30",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "11:00",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "11:30",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "12:00",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "12:30",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "13:00",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "13:30",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "14:00",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "14:30",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "15:00",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "15:30",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "16:00",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            SizedBox(
+              width: 77,
+              height: 35,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                onPressed: () {},
+                child: const Text(
+                  "16:30",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ]),
     );
   }
 
   Padding timePicker() {
     return Padding(
-         padding: const EdgeInsets.only(
-           top: 380),
-         child: SizedBox(
-           height: 200,
-           child: CupertinoDatePicker(
-                  initialDateTime: selectedDate,
-                  mode: CupertinoDatePickerMode.time,
-                  use24hFormat: true,
-                  onDateTimeChanged: (selectedTime) =>
-                    setState(() => this.selectedTime = selectedTime),
-           ),
-         ),
-       );
+      padding: const EdgeInsets.only(top: 380),
+      child: SizedBox(
+        height: 200,
+        child: CupertinoDatePicker(
+          initialDateTime: selectedDate,
+          mode: CupertinoDatePickerMode.time,
+          use24hFormat: true,
+          onDateTimeChanged: (selectedTime) =>
+              setState(() => this.selectedTime = selectedTime),
+        ),
+      ),
+    );
   }
 
-
-
-  Row datePicker(BuildContext context) {
+  /*Row datePicker(BuildContext context) {
     return Row(
       children: [
         SizedBox(
@@ -104,7 +649,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
         SizedBox(height: 10,),
       ],
     );
-  }
+  }*/
 
   Container Title() {
     return Container(
@@ -134,7 +679,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               Image.asset(
                 'assets/icons/${widget.selectedItem["icon"]}',
                 fit: BoxFit.cover,
-                height: deviceSize.height * 0.27,
+                height: deviceSize.height * 0.24,
               ),
             ],
           ),
@@ -201,7 +746,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     );
   }
 
-  _selectDate(BuildContext context) async {
+  /*_selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: selectedDate, // Refer step 1
@@ -212,7 +757,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
       setState(() {
         selectedDate = picked;
       });
-  }
+  }*/
 }
 
 Future<TimeOfDay> _selectTime(BuildContext context) {
