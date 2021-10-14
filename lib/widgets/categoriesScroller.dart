@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/screens/detail_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CategoriesScroller extends StatelessWidget {
   @override
@@ -14,6 +16,7 @@ class CategoriesScroller extends StatelessWidget {
     final loadedHairdresser = hairdresserData.hairdressers;
     final double categoryHeight =
         MediaQuery.of(context).size.height * 0.30 - 45;
+    final currentDisplayName = FirebaseAuth.instance.currentUser.displayName;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -41,16 +44,46 @@ class CategoriesScroller extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        alignment: Alignment.topRight,
+                        child: DropdownButton(
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: Theme.of(context).primaryIconTheme.color,
+                          ),
+                          items: [
+                            DropdownMenuItem(
+                              child: Container(
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.exit_to_app),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text('Logout')
+                                  ],
+                                ),
+                              ),
+                              value: 'logout',
+                            ),
+                          ],
+                          onChanged: (itemIdentifier) {
+                            if (itemIdentifier == "logout") {
+                              FirebaseAuth.instance.signOut();
+                            }
+                          },
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.all(20),
                         child: Text(
-                          "Hi Tobias!",
+                          currentDisplayName != null ? currentDisplayName : "",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 35,
                               fontWeight: FontWeight.bold),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

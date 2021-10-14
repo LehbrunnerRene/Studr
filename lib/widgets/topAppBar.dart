@@ -139,7 +139,7 @@ class TopAppBar extends StatelessWidget {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               alignment: Alignment.topCenter,
-              child: CategoriesScroller(),
+              //child: CategoriesScroller(),
             ),
           ),
           Text(
