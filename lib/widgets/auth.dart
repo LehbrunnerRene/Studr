@@ -33,6 +33,11 @@ class Auth with ChangeNotifier {
       if (signUp) {
         uC = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+        await FirebaseAuth.instance.currentUser.updateDisplayName(username);
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser.uid)
+            .set({'username': username, 'email': email});
       } else {
         uC = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
@@ -47,11 +52,7 @@ class Auth with ChangeNotifier {
           ),
         ),
       );*/
-      await FirebaseAuth.instance.currentUser.updateDisplayName(username);
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser.uid)
-          .set({'username': username, 'email': email});
+
       notifyListeners();
     } catch (error) {
       throw error;
