@@ -27,17 +27,23 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> _authenticate(String email, String password, bool signUp,
-      [String username]) async {
+      [String firstname, String lastname, String age, String gender]) async {
     UserCredential uC;
     try {
       if (signUp) {
         uC = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        await FirebaseAuth.instance.currentUser.updateDisplayName(username);
+        await FirebaseAuth.instance.currentUser.updateDisplayName(firstname);
         await FirebaseFirestore.instance
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser.uid)
-            .set({'username': username, 'email': email});
+            .set({
+          'firstname': firstname,
+          'lastname': lastname,
+          'age': age,
+          'gender': gender,
+          'email': email
+        });
       } else {
         uC = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
@@ -59,8 +65,10 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> signup(String email, String password, String username) async {
-    return _authenticate(email, password, true, username);
+  Future<void> signup(String email, String password, String firstname,
+      String lastname, String age, String gender) async {
+    return _authenticate(
+        email, password, true, firstname, lastname, age, gender);
   }
 
   Future<void> login(String email, String password) async {

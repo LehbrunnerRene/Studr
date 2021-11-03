@@ -63,7 +63,7 @@ class AuthScreen extends StatelessWidget {
                       child: Text(
                         'Studr',
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: Colors.white,
                           fontSize: 50,
                           fontFamily: 'Anton',
                           fontWeight: FontWeight.normal,
@@ -97,7 +97,14 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
-  Map<String, String> _authData = {'email': '', 'password': '', 'username': ''};
+  Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+    'firstname': '',
+    'lastname': '',
+    'age': '',
+    'gender': ''
+  };
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
@@ -134,7 +141,12 @@ class _AuthCardState extends State<AuthCard> {
         );
       } else {
         await Provider.of<Auth>(context, listen: false).signup(
-            _authData['email'], _authData['password'], _authData['username']);
+            _authData['email'],
+            _authData['password'],
+            _authData['firstname'],
+            _authData['lastname'],
+            _authData['age'],
+            _authData['gender']);
       }
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
@@ -200,16 +212,61 @@ class _AuthCardState extends State<AuthCard> {
                 ),
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Name'),
+                    decoration: InputDecoration(labelText: 'Vorname'),
                     keyboardType: TextInputType.name,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Invalid name';
+                        return 'Falsche Eingabe';
                       }
                       return null;
                     },
                     onSaved: (value) {
-                      _authData['username'] = value;
+                      _authData['firstname'] = value;
+                      print(value);
+                    },
+                  ),
+                if (_authMode == AuthMode.Signup)
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Nachname'),
+                    keyboardType: TextInputType.name,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Falsche Eingabe';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _authData['lastname'] = value;
+                      print(value);
+                    },
+                  ),
+                if (_authMode == AuthMode.Signup)
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Alter'),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Falsche Eingabe';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _authData['age'] = value;
+                      print(value);
+                    },
+                  ),
+                if (_authMode == AuthMode.Signup)
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Geschlecht'),
+                    keyboardType: TextInputType.text,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Falsche Eingabe';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _authData['gender'] = value;
                       print(value);
                     },
                   ),
