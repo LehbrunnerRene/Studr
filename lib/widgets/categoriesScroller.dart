@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:studr/providers/google_sign_in.dart';
 import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/screens/detail_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -69,7 +70,10 @@ class CategoriesScroller extends StatelessWidget {
                           ],
                           onChanged: (itemIdentifier) {
                             if (itemIdentifier == "logout") {
-                              FirebaseAuth.instance.signOut();
+                              final provider =
+                                  Provider.of<GoogleSignInProvider>(context,
+                                      listen: false);
+                              provider.logout();
                             }
                           },
                         ),

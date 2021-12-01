@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:studr/providers/google_sign_in.dart';
 import 'package:studr/widgets/auth.dart';
 
 import '../models/http_exception.dart';
@@ -187,9 +189,9 @@ class _AuthCardState extends State<AuthCard> {
       ),
       elevation: 8.0,
       child: Container(
-        height: _authMode == AuthMode.Signup ? 320 : 260,
+        height: _authMode == AuthMode.Signup ? 600 : 320,
         constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
+            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 340 : 260),
         width: deviceSize.width * 0.75,
         padding: EdgeInsets.all(16.0),
         child: Form(
@@ -319,8 +321,22 @@ class _AuthCardState extends State<AuthCard> {
                       '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                   onPressed: _switchAuthMode,
                   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  //materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   textColor: Theme.of(context).primaryColor,
+                ),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.grey.shade200,
+                      onPrimary: Colors.black,
+                      minimumSize: Size(double.infinity, 50)),
+                  icon: FaIcon(FontAwesomeIcons.google,
+                      color: Colors.purple.shade800),
+                  label: Text("Sign Up with Google"),
+                  onPressed: () {
+                    final provider = Provider.of<GoogleSignInProvider>(context,
+                        listen: false);
+                    provider.googleLogin();
+                  },
                 ),
               ],
             ),

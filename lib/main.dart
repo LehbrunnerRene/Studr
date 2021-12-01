@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:studr/providers/google_sign_in.dart';
 import 'package:studr/providers/hairdressers.dart';
 import 'package:studr/screens/auth_screen.dart';
 import 'package:studr/screens/map_screen.dart';
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => GoogleSignInProvider(),
+        ),
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
