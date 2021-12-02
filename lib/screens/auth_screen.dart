@@ -104,8 +104,7 @@ class _AuthCardState extends State<AuthCard> {
     'password': '',
     'firstname': '',
     'lastname': '',
-    'age': '',
-    'gender': ''
+    'birthdate': '',
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
@@ -143,12 +142,12 @@ class _AuthCardState extends State<AuthCard> {
         );
       } else {
         await Provider.of<Auth>(context, listen: false).signup(
-            _authData['email'],
-            _authData['password'],
-            _authData['firstname'],
-            _authData['lastname'],
-            _authData['age'],
-            _authData['gender']);
+          _authData['email'],
+          _authData['password'],
+          _authData['firstname'],
+          _authData['lastname'],
+          _authData['birthdate'],
+        );
       }
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
@@ -244,8 +243,8 @@ class _AuthCardState extends State<AuthCard> {
                   ),
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Alter'),
-                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(labelText: 'Geburtsdatum'),
+                    keyboardType: TextInputType.datetime,
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Falsche Eingabe';
@@ -253,22 +252,7 @@ class _AuthCardState extends State<AuthCard> {
                       return null;
                     },
                     onSaved: (value) {
-                      _authData['age'] = value;
-                      print(value);
-                    },
-                  ),
-                if (_authMode == AuthMode.Signup)
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Geschlecht'),
-                    keyboardType: TextInputType.text,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Falsche Eingabe';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _authData['gender'] = value;
+                      _authData['birthdate'] = value;
                       print(value);
                     },
                   ),

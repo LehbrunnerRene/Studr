@@ -27,7 +27,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> _authenticate(String email, String password, bool signUp,
-      [String firstname, String lastname, String age, String gender]) async {
+      [String firstname, String lastname, String birthdate]) async {
     UserCredential uC;
     try {
       if (signUp) {
@@ -40,8 +40,7 @@ class Auth with ChangeNotifier {
             .set({
           'firstname': firstname,
           'lastname': lastname,
-          'age': age,
-          'gender': gender,
+          'birthdate': birthdate,
           'email': email
         });
       } else {
@@ -66,9 +65,8 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> signup(String email, String password, String firstname,
-      String lastname, String age, String gender) async {
-    return _authenticate(
-        email, password, true, firstname, lastname, age, gender);
+      String lastname, String birthdate) async {
+    return _authenticate(email, password, true, firstname, lastname, birthdate);
   }
 
   Future<void> login(String email, String password) async {
