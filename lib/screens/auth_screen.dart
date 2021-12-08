@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:studr/providers/google_sign_in.dart';
 import 'package:studr/widgets/auth.dart';
@@ -108,6 +109,37 @@ class _AuthCardState extends State<AuthCard> {
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
+  final DateFormat dateFormat = DateFormat('dd.MM.yyyy');
+
+  DateTime _date = DateTime.now();
+
+  Future<Null> _selectDate(BuildContext context) async {
+    var categoryHeight = MediaQuery.of(context).size;
+    DateTime _datePicker = await showDatePicker(
+        context: context,
+        initialDate: _date,
+        firstDate: DateTime(1947),
+        lastDate: DateTime(2030),
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData(
+              primarySwatch: Colors.blue,
+              primaryColor: Colors.blue,
+              accentColor: Colors.blue,
+            ),
+            child: child,
+          );
+        });
+
+    if (_datePicker != null && _datePicker != _date) {
+      setState(() {
+        _date = _datePicker;
+        print(
+          _date.toString(),
+        );
+      });
+    }
+  }
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -244,6 +276,27 @@ class _AuthCardState extends State<AuthCard> {
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
                     decoration: InputDecoration(labelText: 'Geburtsdatum'),
+                    key: Key(_date.toString()),
+                    initialValue: _date.toString(),
+                    validator: (value) {
+                      print(_authData["birthdate"]);
+                      if (value.isEmpty) {
+                        return 'Falsche Eingabe';
+                      }
+                      return null;
+                    },
+                    onTap: () {
+                      setState(() {
+                        _selectDate(context);
+                      });
+                    },
+                    onSaved: (value) {
+                      _authData['birthdate'] = value;
+                      print(value);
+                    },
+                  ),
+                /*TextFormField(
+                    decoration: InputDecoration(labelText: 'Geburtsdatum'),
                     keyboardType: TextInputType.datetime,
                     validator: (value) {
                       if (value.isEmpty) {
@@ -255,7 +308,7 @@ class _AuthCardState extends State<AuthCard> {
                       _authData['birthdate'] = value;
                       print(value);
                     },
-                  ),
+                  ),*/
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Password'),
                   obscureText: true,

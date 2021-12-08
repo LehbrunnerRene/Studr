@@ -31,7 +31,7 @@ class GoogleSignInProvider extends ChangeNotifier {
   }
 
   Future logout() async {
-    if (googleSignIn.isSignedIn() == null) {
+    if (googleSignIn.currentUser != null) {
       await googleSignIn.disconnect();
     }
 
