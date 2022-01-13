@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:studr/models/hairdresser.dart';
@@ -23,6 +25,10 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
   final DateFormat dateFormat = DateFormat('dd.MM.yyyy');
 
   DateTime _date = DateTime.now();
+  String _selectedTime;
+  String _selectedHairdresser;
+  var _btnPressed = List<bool>.filled(16, false);
+  var _hairdresserPressed = List<bool>.filled(4, false);
 
   Future<Null> _selectDate(BuildContext context) async {
     var categoryHeight = MediaQuery.of(context).size;
@@ -45,6 +51,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     if (_datePicker != null && _datePicker != _date) {
       setState(() {
         _date = _datePicker;
+        print(_selectedTime);
         print(
           _date.toString(),
         );
@@ -82,7 +89,25 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
         child: ElevatedButton(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.black)),
-          onPressed: () {},
+          onPressed: () {
+            FirebaseFirestore.instance
+                .collection("bookings")
+                .add(<String, dynamic>{
+              "date": _date,
+              "time": _selectedTime,
+              "hairdresser": _selectedHairdresser,
+              "username": FirebaseAuth.instance.currentUser.displayName,
+              "userId": FirebaseAuth.instance.currentUser.uid,
+            });
+            Navigator.pop(context);
+            /*CupertinoAlertDialog(
+              title: Text("Buchung erfolgreich"),
+              content: Icon(
+                Icons.done,
+                color: Colors.green,
+              ),
+            );*/
+          },
           child: const Text(
             "Buchen",
             style: TextStyle(fontSize: 18),
@@ -170,12 +195,21 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
                 clipBehavior: Clip.hardEdge,
                 color: Colors.transparent,
                 child: Ink.image(
+                  colorFilter: _hairdresserPressed[0]
+                      ? ColorFilter.mode(Colors.grey, BlendMode.color)
+                      : null,
                   image: AssetImage('assets/workers/worker1.jpg'),
                   fit: BoxFit.cover,
                   width: 75.0,
                   height: 75.0,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _selectedHairdresser = "Martina";
+                        _hairdresserPressed.fillRange(0, 3, false);
+                        _hairdresserPressed[0] = !_hairdresserPressed[0];
+                      });
+                    },
                   ),
                 ),
               ),
@@ -206,12 +240,21 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
                 clipBehavior: Clip.hardEdge,
                 color: Colors.transparent,
                 child: Ink.image(
+                  colorFilter: _hairdresserPressed[1]
+                      ? ColorFilter.mode(Colors.grey, BlendMode.color)
+                      : null,
                   image: AssetImage('assets/workers/worker5.jpg'),
                   fit: BoxFit.cover,
                   width: 75.0,
                   height: 75.0,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _selectedHairdresser = "Laura";
+                        _hairdresserPressed.fillRange(0, 3, false);
+                        _hairdresserPressed[1] = !_hairdresserPressed[1];
+                      });
+                    },
                   ),
                 ),
               ),
@@ -242,12 +285,21 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
                 clipBehavior: Clip.hardEdge,
                 color: Colors.transparent,
                 child: Ink.image(
+                  colorFilter: _hairdresserPressed[2]
+                      ? ColorFilter.mode(Colors.grey, BlendMode.color)
+                      : null,
                   image: AssetImage('assets/workers/worker3.jpg'),
                   fit: BoxFit.cover,
                   width: 75.0,
                   height: 75.0,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _selectedHairdresser = "Sarah";
+                        _hairdresserPressed.fillRange(0, 3, false);
+                        _hairdresserPressed[2] = !_hairdresserPressed[2];
+                      });
+                    },
                   ),
                 ),
               ),
@@ -278,12 +330,21 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
                 clipBehavior: Clip.hardEdge,
                 color: Colors.transparent,
                 child: Ink.image(
+                  colorFilter: _hairdresserPressed[3]
+                      ? ColorFilter.mode(Colors.grey, BlendMode.color)
+                      : null,
                   image: AssetImage('assets/workers/worker4.jpg'),
                   fit: BoxFit.cover,
                   width: 75.0,
                   height: 75.0,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _selectedHairdresser = "Mario";
+                        _hairdresserPressed.fillRange(0, 3, false);
+                        _hairdresserPressed[3] = !_hairdresserPressed[3];
+                      });
+                    },
                   ),
                 ),
               ),
@@ -331,8 +392,17 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[0]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  print("test");
+                  _selectedTime = "9";
+                  setState(() {
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[0] = !_btnPressed[0];
+                  });
+                },
                 child: const Text(
                   "9:00",
                   style: TextStyle(fontSize: 15),
@@ -347,8 +417,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[1]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "9:30";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[1] = !_btnPressed[1];
+                  });
+                },
                 child: const Text(
                   "9:30",
                   style: TextStyle(fontSize: 15),
@@ -363,8 +441,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[2]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "10:00";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[2] = !_btnPressed[2];
+                  });
+                },
                 child: const Text(
                   "10:00",
                   style: TextStyle(fontSize: 15),
@@ -379,8 +465,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[3]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "10:30";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[3] = !_btnPressed[3];
+                  });
+                },
                 child: const Text(
                   "10:30",
                   style: TextStyle(fontSize: 15),
@@ -399,8 +493,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[4]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "11:00";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[4] = !_btnPressed[4];
+                  });
+                },
                 child: const Text(
                   "11:00",
                   style: TextStyle(fontSize: 15),
@@ -415,8 +517,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[5]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "11:30";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[5] = !_btnPressed[5];
+                  });
+                },
                 child: const Text(
                   "11:30",
                   style: TextStyle(fontSize: 15),
@@ -431,8 +541,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[6]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "12:00";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[6] = !_btnPressed[6];
+                  });
+                },
                 child: const Text(
                   "12:00",
                   style: TextStyle(fontSize: 15),
@@ -447,8 +565,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[7]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "12:30";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[7] = !_btnPressed[7];
+                  });
+                },
                 child: const Text(
                   "12:30",
                   style: TextStyle(fontSize: 15),
@@ -467,8 +593,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[8]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "13:00";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[8] = !_btnPressed[8];
+                  });
+                },
                 child: const Text(
                   "13:00",
                   style: TextStyle(fontSize: 15),
@@ -483,8 +617,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[15]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "13:30";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[15] = !_btnPressed[15];
+                  });
+                },
                 child: const Text(
                   "13:30",
                   style: TextStyle(fontSize: 15),
@@ -499,8 +641,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[9]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "14:00";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[9] = !_btnPressed[9];
+                  });
+                },
                 child: const Text(
                   "14:00",
                   style: TextStyle(fontSize: 15),
@@ -515,8 +665,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[10]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "14:30";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[10] = !_btnPressed[10];
+                  });
+                },
                 child: const Text(
                   "14:30",
                   style: TextStyle(fontSize: 15),
@@ -535,8 +693,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[11]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "15:00";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[11] = !_btnPressed[11];
+                  });
+                },
                 child: const Text(
                   "15:00",
                   style: TextStyle(fontSize: 15),
@@ -551,8 +717,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[12]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "15:30";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[12] = !_btnPressed[12];
+                  });
+                },
                 child: const Text(
                   "15:30",
                   style: TextStyle(fontSize: 15),
@@ -567,8 +741,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[13]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "16:00";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[13] = !_btnPressed[13];
+                  });
+                },
                 child: const Text(
                   "16:00",
                   style: TextStyle(fontSize: 15),
@@ -583,8 +765,16 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               height: 35,
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                onPressed: () {},
+                    backgroundColor: _btnPressed[14]
+                        ? MaterialStateProperty.all(Colors.grey)
+                        : MaterialStateProperty.all(Colors.black)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTime = "16:30";
+                    _btnPressed.fillRange(0, 16, false);
+                    _btnPressed[14] = !_btnPressed[14];
+                  });
+                },
                 child: const Text(
                   "16:30",
                   style: TextStyle(fontSize: 15),

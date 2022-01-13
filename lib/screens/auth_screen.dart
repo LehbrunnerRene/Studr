@@ -235,7 +235,7 @@ class _AuthCardState extends State<AuthCard> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
-                      return 'Invalid email!';
+                      return 'Bitte E-mail eingeben!';
                     }
                     return null;
                   },
@@ -315,7 +315,7 @@ class _AuthCardState extends State<AuthCard> {
                   controller: _passwordController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
-                      return 'Password is too short!';
+                      return 'Passwort ist zu kurz';
                     }
                   },
                   onSaved: (value) {
@@ -330,7 +330,7 @@ class _AuthCardState extends State<AuthCard> {
                     validator: _authMode == AuthMode.Signup
                         ? (value) {
                             if (value != _passwordController.text) {
-                              return 'Passwords do not match!';
+                              return 'Passwörter stimmen nicht überein';
                             }
                           }
                         : null,
