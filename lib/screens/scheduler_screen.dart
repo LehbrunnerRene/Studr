@@ -51,6 +51,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     if (_datePicker != null && _datePicker != _date) {
       setState(() {
         _date = _datePicker;
+        print(widget.selectedItem);
         print(_selectedTime);
         print(
           _date.toString(),
@@ -98,6 +99,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               "hairdresser": _selectedHairdresser,
               "username": FirebaseAuth.instance.currentUser.displayName,
               "userId": FirebaseAuth.instance.currentUser.uid,
+              "HairdresserCompanyId": widget.selectedItem["id"]
             });
             Navigator.pop(context);
             /*CupertinoAlertDialog(
