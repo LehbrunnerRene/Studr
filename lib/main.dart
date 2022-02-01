@@ -10,6 +10,7 @@ import 'package:studr/screens/map_screen.dart';
 import 'package:studr/screens/search_screen.dart';
 import 'package:studr/screens/signup_screen.dart';
 import 'package:studr/widgets/auth.dart';
+import 'package:studr/widgets/categoriesScroller.dart';
 
 import 'screens/hairdresser_overview_screen.dart';
 import 'widgets/hairdresserList.dart';
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
                 if (userSnapshot.hasData) {
                   return MyAppBar();
                 }
-                return SignUpScreen();
+                return AuthScreen();
               }),
         ),
       ),

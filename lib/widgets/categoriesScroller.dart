@@ -19,12 +19,85 @@ class CategoriesScroller extends StatelessWidget {
         MediaQuery.of(context).size.height * 0.30 - 45;
     final currentDisplayName = FirebaseAuth.instance.currentUser.displayName;
     return Scaffold(
+      backgroundColor: Colors.lightBlue.shade50,
       body: SafeArea(
         child: Column(
           children: [
             Stack(
               children: [
                 Container(
+                  height: 220,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(60),
+                      bottomRight: Radius.circular(60),
+                    ),
+                    color: new Color(0xff00d5ff),
+                    gradient: LinearGradient(
+                      colors: [(new Color(0xff00d5ff)), new Color(0xff00d5ff)],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        spreadRadius: 1.5,
+                        offset: Offset(5, 10),
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        alignment: Alignment.topRight,
+                        child: DropdownButton(
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: Theme.of(context).primaryIconTheme.color,
+                          ),
+                          items: [
+                            DropdownMenuItem(
+                              child: Container(
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.exit_to_app),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text('Logout')
+                                  ],
+                                ),
+                              ),
+                              value: 'logout',
+                            ),
+                          ],
+                          onChanged: (itemIdentifier) {
+                            if (itemIdentifier == "logout") {
+                              final provider =
+                                  Provider.of<GoogleSignInProvider>(context,
+                                      listen: false);
+                              provider.logout();
+                            }
+                          },
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 20, right: 150),
+                        child: Image.asset(
+                          "assets/logo/Studr.png",
+                          height: 150,
+                          width: 150,
+                        ),
+                      ),
+                    ],
+                  )),
+                ),
+
+                /*Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.width / 1.7,
                   decoration: BoxDecoration(
@@ -90,17 +163,18 @@ class CategoriesScroller extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
+                ),*/
               ],
             ),
             Container(
               alignment: Alignment.bottomLeft,
-              padding: EdgeInsets.only(left: 20.0, top: 15.0),
+              padding: EdgeInsets.only(left: 20.0, top: 20.0),
               child: Text(
-                "In deiner Nähe:",
+                "Für Sie empfohlen",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 27,
+                  fontSize: 26,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -121,7 +195,7 @@ class CategoriesScroller extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: Container(
                         margin: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 8),
+                            vertical: 15, horizontal: 4),
                         child: FittedBox(
                           fit: BoxFit.fill,
                           alignment: Alignment.topCenter,
@@ -134,9 +208,10 @@ class CategoriesScroller extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black,
-                                        spreadRadius: 0.5,
-                                        blurRadius: 5,
+                                        color: Colors.grey,
+                                        spreadRadius: 1.5,
+                                        offset: Offset(5, 10),
+                                        blurRadius: 10,
                                       ),
                                     ],
                                     color: Colors.white,
@@ -204,17 +279,30 @@ class CategoriesScroller extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    spreadRadius: 1.5,
+                    offset: Offset(5, 10),
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              child: SizedBox(
                 height: 200,
                 width: 390,
                 child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
-                      bottomLeft: Radius.circular(30),
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
+                      //bottomRight: Radius.circular(30),
+                      //bottomLeft: Radius.circular(30),
                     ),
-                    child: MapSample())),
+                    child: MapSample()),
+              ),
+            ),
           ],
         ),
       ),
