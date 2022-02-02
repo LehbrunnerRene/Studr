@@ -154,7 +154,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 38,
+                      fontSize: 36,
                     ),
                   ),
                 ),

@@ -33,6 +33,48 @@ class AuthScreen extends StatelessWidget {
                     child: Container(
                       height: 250,
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(60),
+                          bottomRight: Radius.circular(60),
+                        ),
+                        color: new Color(0xff00d5ff),
+                        gradient: LinearGradient(
+                          colors: [
+                            (new Color(0xff00d5ff)),
+                            new Color(0xff00d5ff)
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            spreadRadius: 1.5,
+                            offset: Offset(5, 10),
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 20, right: 150),
+                            child: Image.asset(
+                              "assets/logo/Studr.png",
+                              height: 150,
+                              width: 150,
+                            ),
+                          ),
+                        ],
+                      )),
+                    ),
+
+                    /*Container(
+                      height: 250,
+                      decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.only(bottomLeft: Radius.circular(90)),
                         color: new Color(0xff00d5ff),
@@ -60,7 +102,7 @@ class AuthScreen extends StatelessWidget {
                           ),
                         ],
                       )),
-                    ),
+                    ),*/
                   ),
                   Flexible(
                     flex: 2,
@@ -472,15 +514,20 @@ class _AuthCardState extends State<AuthCard> {
                 color: Color(0xff00d5ff),
               )
             else
-              RaisedButton(
+              ElevatedButton(
                 child: Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
                 onPressed: _submit,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                color: Color(0xff00d5ff),
-                textColor: Theme.of(context).primaryTextTheme.button.color,
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                    primary: Color(0xff00d5ff),
+                    onPrimary: Colors.white,
+                    enableFeedback: true,
+                    textStyle: TextStyle(fontSize: 16),
+                    minimumSize: Size(deviceSize.width * 0.5, 40)),
               ),
             FlatButton(
               child: Text(
@@ -493,6 +540,9 @@ class _AuthCardState extends State<AuthCard> {
             if (_authMode == AuthMode.Login)
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     primary: Color(0xff00d5ff),
                     onPrimary: Colors.white,
                     minimumSize: Size(deviceSize.width * 0.9, 50)),
