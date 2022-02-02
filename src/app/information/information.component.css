@@ -1,0 +1,9 @@
+.btn-right {
+  position: absolute;
+  color: black;
+  background-color: white;
+  margin: 10px;
+  height: 40px;
+  top: 0;
+  right: 0;
+}

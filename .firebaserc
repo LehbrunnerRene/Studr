@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "studr-305121": {
+      "hosting": {
+        "StudrAdmin": [
+          "studr-305121"
+        ]
+      }
+    }
+  }
+}
