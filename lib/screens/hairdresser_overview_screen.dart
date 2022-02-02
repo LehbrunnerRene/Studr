@@ -16,11 +16,15 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   void initState() {
     //Provider.of<Hairdressers>(context, listen: false).fetchAndSetHairdresser();
     //Provider.of<Hairdressers>(context, listen: false).getInformation();
-    Provider.of<Hairdressers>(context, listen: false).getHairdressers();
-    Provider.of<Hairdressers>(context, listen: false).getInfo();
-    Provider.of<Hairdressers>(context, listen: false).getPric();
-    Provider.of<Hairdressers>(context, listen: false).getRating();
+    getData();
     super.initState();
+  }
+
+  Future<void> getData() async {
+    await Provider.of<Hairdressers>(context, listen: false).getHairdressers();
+    await Provider.of<Hairdressers>(context, listen: false).getInfo();
+    await Provider.of<Hairdressers>(context, listen: false).getPric();
+    await Provider.of<Hairdressers>(context, listen: false).getRating();
   }
 
   @override

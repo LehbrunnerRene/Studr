@@ -43,25 +43,28 @@ class MyApp extends StatelessWidget {
         ),*/
       ],
       child: Consumer<Auth>(
-        builder: (ctx, auth, _) => MaterialApp(
-          theme: ThemeData.from(
-            colorScheme: const ColorScheme.light(),
-          ).copyWith(
-              pageTransitionsTheme: const PageTransitionsTheme(
-                  builders: <TargetPlatform, PageTransitionsBuilder>{
-                TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
-              })),
-          title: 'Studr',
-          //home: auth.isAuth ? MyAppBar() : AuthScreen(),
-          home: StreamBuilder(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (ctx, userSnapshot) {
-                print(userSnapshot.hasData);
-                if (userSnapshot.hasData) {
-                  return MyAppBar();
-                }
-                return AuthScreen();
-              }),
+        builder: (ctx, auth, _) => Provider(
+          create: (BuildContext context) {},
+          child: MaterialApp(
+            theme: ThemeData.from(
+              colorScheme: const ColorScheme.light(),
+            ).copyWith(
+                pageTransitionsTheme: const PageTransitionsTheme(
+                    builders: <TargetPlatform, PageTransitionsBuilder>{
+                  TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+                })),
+            title: 'Studr',
+            //home: auth.isAuth ? MyAppBar() : AuthScreen(),
+            home: StreamBuilder(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (ctx, userSnapshot) {
+                  print(userSnapshot.hasData);
+                  if (userSnapshot.hasData) {
+                    return MyAppBar();
+                  }
+                  return AuthScreen();
+                }),
+          ),
         ),
       ),
     );
