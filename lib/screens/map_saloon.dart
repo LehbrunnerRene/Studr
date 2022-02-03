@@ -6,12 +6,19 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:studr/providers/hairdressers.dart';
 
 LatLng point = LatLng(48.26865011002132, 14.251855200210889);
 
 class MapScreenSaloon extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    
+    final information = Provider.of<Hairdressers>(context).information;
+    //var lat = information.elementAt(this.selectedItem["id"] - 1).lat.toString();
+    //var lng = information.elementAt(this.selectedItem["id"] - 1).lng.toString();
     return MaterialApp(
       title: 'Flutter Google Maps',
       home: MapSample(),
