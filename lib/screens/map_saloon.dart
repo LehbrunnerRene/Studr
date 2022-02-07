@@ -19,6 +19,8 @@ class MapScreenSaloon extends StatelessWidget {
     final information = Provider.of<Hairdressers>(context).information;
     //var lat = information.elementAt(this.selectedItem["id"] - 1).lat.toString();
     //var lng = information.elementAt(this.selectedItem["id"] - 1).lng.toString();
+    //var lat = information.elementAt(this.selectedItem["id"] - 1).lat.toString();
+    //var lng = information.elementAt(this.selectedItem["id"] - 1).lng.toString();
     return MaterialApp(
       title: 'Flutter Google Maps',
       home: MapSample(),
