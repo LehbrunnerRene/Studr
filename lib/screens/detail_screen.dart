@@ -103,14 +103,15 @@ class _DetailScreenState extends State<DetailScreen> {
 
     /*Map address =
         information.elementAt(widget.selectedItem["id"] - 1)["address"];*/
-    var malePrice = prices.elementAt(1)["Male"];
-    var femalePrice = prices.elementAt(widget.selectedItem["id"] - 1)["Female"];
+    final malePrice = prices.elementAt(1)["Male"];
+    final femalePrice =
+        prices.elementAt(widget.selectedItem["id"] - 1)["Female"];
     List diffRating = [];
-    ratings.forEach((element) {
+    for (var element in ratings) {
       if (element["ratingId"] == widget.selectedItem["id"]) {
         diffRating.add(element);
       }
-    });
+    }
 
     var text = Text(
       "Bewertung schreiben",
@@ -162,9 +163,11 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 30,
                 ),
                 Text(
-                  information
-                      .elementAt(widget.selectedItem["id"] - 1)
-                      .priceSegment,
+                  information != null
+                      ? information
+                          .elementAt(widget.selectedItem["id"] - 1)
+                          .priceSegment
+                      : "",
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 30,
@@ -402,7 +405,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             DividerPadding(),
             ListView.builder(
-              itemCount: malePrice.length,
+              itemCount: malePrice != null ? malePrice.length : 0,
               shrinkWrap: true,
               physics: ScrollPhysics(),
               padding: EdgeInsets.all(0),
@@ -473,7 +476,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       Container(
                         width: 280,
                         child: Text(
-                          femalePrice[index]["name"],
+                          femalePrice != null ? femalePrice[index]["name"] : "",
                           style: TextStyle(
                             fontSize: 18,
                             fontStyle: FontStyle.italic,
@@ -573,7 +576,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Column(
                         children: [
                           Text(
-                            diffRating[index]["name"],
+                            diffRating.isEmpty ? "" : diffRating[index]["name"],
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -592,7 +595,9 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                         RatingBarIndicator(
                           itemCount: 5,
-                          rating: diffRating[index]["rating"].toDouble(),
+                          rating: diffRating.isEmpty
+                              ? 0
+                              : diffRating[index]["rating"].toDouble(),
                           direction: Axis.horizontal,
                           itemSize: 30,
                           itemBuilder: (context, index) => Icon(
@@ -619,7 +624,9 @@ class _DetailScreenState extends State<DetailScreen> {
                         Container(
                           width: 300,
                           child: Text(
-                            diffRating[index]["comment"],
+                            diffRating.isEmpty
+                                ? ""
+                                : diffRating[index]["comment"],
                             style: TextStyle(
                               fontSize: 17,
                               fontStyle: FontStyle.italic,

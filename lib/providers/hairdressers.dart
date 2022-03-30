@@ -27,15 +27,15 @@ class Hairdressers with ChangeNotifier {
     List<Information> test = [];
     _information.forEach((element) {
       test.add(new Information(
-          element["address"]["city"],
-          element["address"]["city"],
-          element["address"]["street"],
-          element["email"],
-          element["opening times"],
-          element["hId"],
-          element["phone number"],
-          element["price segment"],
-          element["rating"]));
+          element[0]["address"]["city"],
+          element[0]["address"]["city"],
+          element[0]["address"]["street"],
+          element[0]["email"],
+          element[0]["opening times"],
+          element[0]["hId"],
+          element[0]["phone number"],
+          element[0]["price segment"],
+          element[0]["rating"]));
     });
     test = test.orderBy((element) => element.hId).toList();
     return [...test];
@@ -174,6 +174,21 @@ class Hairdressers with ChangeNotifier {
         _hairdressers.add(element.data());
       });
     });
+    notifyListeners();
+  }
+
+  Future<void> getInformation() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('Hairdresser').get();
+
+    List<DocumentReference<Object>> references =
+        querySnapshot.docs.map((doc) => doc.reference).toList();
+
+    for (var e in references) {
+      QuerySnapshot querySnapshot2 = await e.collection("Information").get();
+      _information.add(querySnapshot2.docs.map((doc) => doc.data()).toList());
+    }
+
     notifyListeners();
   }
 

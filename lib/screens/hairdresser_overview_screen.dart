@@ -22,9 +22,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
 
   Future<void> getData() async {
     await Provider.of<Hairdressers>(context, listen: false).getHairdressers();
-    await Provider.of<Hairdressers>(context, listen: false).getInfo();
     await Provider.of<Hairdressers>(context, listen: false).getPric();
     await Provider.of<Hairdressers>(context, listen: false).getRating();
+    await Provider.of<Hairdressers>(context, listen: false).getInformation();
   }
 
   @override
