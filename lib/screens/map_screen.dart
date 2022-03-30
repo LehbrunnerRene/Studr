@@ -53,6 +53,7 @@ class MapSampleState extends State<MapSample> {
                     _setMarkers(LatLng(48.30602929070519, 14.28703947571657));
                     _setMarkers(LatLng(48.30439984828077, 14.291428505563399));
                     _setMarkers(LatLng(48.30443379552855, 14.283415974331396));
+                    _setMarkers(LatLng(48.30443379552845, 14.283415974331396));
                   });       
                 },
               );
