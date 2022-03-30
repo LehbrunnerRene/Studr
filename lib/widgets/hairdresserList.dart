@@ -18,16 +18,6 @@ class HairdresserList extends StatelessWidget {
             left: 5.0,
             right: 5.0,
           ),
-          child: TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Search",
-            ),
-          ),
-        ),
-        Divider(
-          color: Colors.black,
-          thickness: 2,
         ),
         Expanded(
           child: ListView.builder(
