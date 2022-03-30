@@ -98,14 +98,28 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     final hairdressers = Provider.of<Hairdressers>(context).hairdressers;
     final information = Provider.of<Hairdressers>(context).information;
-    final prices = Provider.of<Hairdressers>(context).prices;
+    final femalePrice = Provider.of<Hairdressers>(context).pricesFemale;
+    final malePrice = Provider.of<Hairdressers>(context).pricesMale;
     final ratings = Provider.of<Hairdressers>(context).ratings;
 
     /*Map address =
         information.elementAt(widget.selectedItem["id"] - 1)["address"];*/
-    final malePrice = prices.elementAt(1)["Male"];
-    final femalePrice =
-        prices.elementAt(widget.selectedItem["id"] - 1)["Female"];
+    List femalePrices = [];
+    for (var element in femalePrice) {
+      for(var e in element) {
+        if (e["priceId"] == widget.selectedItem["id"]) {
+        femalePrices.add(e);
+      }
+      }
+    }
+    List malePrices = [];
+    for (var element in malePrice) {
+      for(var e in element) {
+        if (e["priceId"] == widget.selectedItem["id"]) {
+          malePrices.add(e);
+        }
+      }
+    }
     List diffRating = [];
     for (var element in ratings) {
       if (element["ratingId"] == widget.selectedItem["id"]) {
@@ -405,7 +419,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             DividerPadding(),
             ListView.builder(
-              itemCount: malePrice != null ? malePrice.length : 0,
+              itemCount: malePrices.isNotEmpty ? malePrices.length : 0,
               shrinkWrap: true,
               physics: ScrollPhysics(),
               padding: EdgeInsets.all(0),
@@ -420,7 +434,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       Container(
                         width: 280,
                         child: Text(
-                          malePrice[index]["name"],
+                          malePrices[index]["name"],
                           style: TextStyle(
                             fontSize: 18,
                             fontStyle: FontStyle.italic,
@@ -428,7 +442,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                       ),
                       Text(
-                        malePrice[index]["price"].toString() + "€",
+                        malePrices[index]["price"].toString() + "€",
                         style: TextStyle(
                           fontSize: 18,
                           fontStyle: FontStyle.italic,
@@ -461,7 +475,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             DividerPadding(),
             ListView.builder(
-              itemCount: femalePrice.length,
+              itemCount: femalePrices.length,
               shrinkWrap: true,
               physics: ScrollPhysics(),
               padding: EdgeInsets.all(0),
@@ -476,7 +490,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       Container(
                         width: 280,
                         child: Text(
-                          femalePrice != null ? femalePrice[index]["name"] : "",
+                          femalePrices.isNotEmpty ? femalePrices[index]["name"] : "",
                           style: TextStyle(
                             fontSize: 18,
                             fontStyle: FontStyle.italic,
@@ -484,7 +498,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                       ),
                       Text(
-                        femalePrice[index]["price"].toString() + "€",
+                        femalePrices[index]["price"].toString() + "€",
                         style: TextStyle(
                           fontSize: 18,
                           fontStyle: FontStyle.italic,

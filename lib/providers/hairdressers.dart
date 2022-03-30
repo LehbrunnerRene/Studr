@@ -13,6 +13,8 @@ class Hairdressers with ChangeNotifier {
   List<Hairdresser> _items = [];
   List<dynamic> _information = [];
   List<dynamic> _prices = [];
+  List<dynamic> _pricesFemale = [];
+  List<dynamic> _pricesMale = [];
   List<dynamic> _ratings = [];
   List<dynamic> _hairdressers = [];
   String _username;
@@ -43,6 +45,14 @@ class Hairdressers with ChangeNotifier {
 
   List<dynamic> get prices {
     return [..._prices];
+  }
+
+  List<dynamic> get pricesFemale {
+    return [..._pricesFemale];
+  }
+
+  List<dynamic> get pricesMale {
+    return [..._pricesMale];
   }
 
   List<dynamic> get ratings {
@@ -150,6 +160,36 @@ class Hairdressers with ChangeNotifier {
         _prices.add(element.data());
       });
     });
+    notifyListeners();
+  }
+
+  Future<dynamic> getPricesFemale() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('Hairdresser').get();
+
+    List<DocumentReference<Object>> references =
+        querySnapshot.docs.map((doc) => doc.reference).toList();
+
+    for (var e in references) {
+      QuerySnapshot querySnapshot2 = await e.collection("PricesFemale").get();
+      _pricesFemale.add(querySnapshot2.docs.map((doc) => doc.data()).toList());
+    }
+
+    notifyListeners();
+  }
+
+  Future<dynamic> getPricesMale() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('Hairdresser').get();
+
+    List<DocumentReference<Object>> references =
+        querySnapshot.docs.map((doc) => doc.reference).toList();
+
+    for (var e in references) {
+      QuerySnapshot querySnapshot2 = await e.collection("PricesMale").get();
+      _pricesMale.add(querySnapshot2.docs.map((doc) => doc.data()).toList());
+    }
+
     notifyListeners();
   }
 
