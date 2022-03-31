@@ -106,15 +106,15 @@ class _DetailScreenState extends State<DetailScreen> {
         information.elementAt(widget.selectedItem["id"] - 1)["address"];*/
     List femalePrices = [];
     for (var element in femalePrice) {
-      for(var e in element) {
+      for (var e in element) {
         if (e["priceId"] == widget.selectedItem["id"]) {
-        femalePrices.add(e);
-      }
+          femalePrices.add(e);
+        }
       }
     }
     List malePrices = [];
     for (var element in malePrice) {
-      for(var e in element) {
+      for (var e in element) {
         if (e["priceId"] == widget.selectedItem["id"]) {
           malePrices.add(e);
         }
@@ -177,7 +177,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 30,
                 ),
                 Text(
-                  information != null
+                  information.isNotEmpty
                       ? information
                           .elementAt(widget.selectedItem["id"] - 1)
                           .priceSegment
@@ -271,9 +271,11 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 20,
                 ),
                 Text(
-                  information
-                      .elementAt(widget.selectedItem["id"] - 1)
-                      .phoneNumber,
+                  information.isNotEmpty
+                      ? information
+                          .elementAt(widget.selectedItem["id"] - 1)
+                          .phoneNumber
+                      : "",
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -294,7 +296,11 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 20,
                 ),
                 Text(
-                  information.elementAt(widget.selectedItem["id"] - 1).email,
+                  information.isNotEmpty
+                      ? information
+                          .elementAt(widget.selectedItem["id"] - 1)
+                          .email
+                      : "",
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -330,9 +336,11 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 65,
                 ),
                 Text(
-                  information
-                      .elementAt(widget.selectedItem["id"] - 1)
-                      .openingTimes,
+                  information.isNotEmpty
+                      ? information
+                          .elementAt(widget.selectedItem["id"] - 1)
+                          .openingTimes
+                      : "",
                   style: TextStyle(
                     fontSize: 15,
                   ),
@@ -352,17 +360,19 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 20,
                 ),
                 Text(
-                  information
-                          .elementAt(widget.selectedItem["id"] - 1)
-                          .postalCode +
-                      " " +
-                      information
-                          .elementAt(widget.selectedItem["id"] - 1)
-                          .city +
-                      ", " +
-                      information
-                          .elementAt(widget.selectedItem["id"] - 1)
-                          .street,
+                  information.isNotEmpty
+                      ? information
+                              .elementAt(widget.selectedItem["id"] - 1)
+                              .postalCode +
+                          " " +
+                          information
+                              .elementAt(widget.selectedItem["id"] - 1)
+                              .city +
+                          ", " +
+                          information
+                              .elementAt(widget.selectedItem["id"] - 1)
+                              .street
+                      : "",
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -490,7 +500,9 @@ class _DetailScreenState extends State<DetailScreen> {
                       Container(
                         width: 280,
                         child: Text(
-                          femalePrices.isNotEmpty ? femalePrices[index]["name"] : "",
+                          femalePrices.isNotEmpty
+                              ? femalePrices[index]["name"]
+                              : "",
                           style: TextStyle(
                             fontSize: 18,
                             fontStyle: FontStyle.italic,
@@ -538,12 +550,14 @@ class _DetailScreenState extends State<DetailScreen> {
                   width: 25,
                 ),
                 Text(
-                  information
-                          .elementAt(widget.selectedItem["id"] - 1)
-                          .rating
-                          .toString()
-                          .replaceAll('.', ',') +
-                      " / 5,0",
+                  information.isNotEmpty
+                      ? information
+                              .elementAt(widget.selectedItem["id"] - 1)
+                              .rating
+                              .toString()
+                              .replaceAll('.', ',') +
+                          " / 5,0"
+                      : "",
                   style: TextStyle(
                     fontSize: 30,
                     fontStyle: FontStyle.italic,
@@ -554,10 +568,12 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
                 RatingBarIndicator(
                   itemCount: 5,
-                  rating: information
-                      .elementAt(widget.selectedItem["id"] - 1)
-                      .rating
-                      .toDouble(),
+                  rating: information.isNotEmpty
+                      ? information
+                          .elementAt(widget.selectedItem["id"] - 1)
+                          .rating
+                          .toDouble()
+                      : 0,
                   direction: Axis.horizontal,
                   itemSize: 40,
                   itemBuilder: (context, index) => Icon(
